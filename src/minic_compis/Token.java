@@ -10,5 +10,5 @@ package minic_compis;
  * @author Walter Rodriguez
  */
 public enum Token {
-    Palabra, Numero, ERROR;
+    white, P_Reservada, Identificador, ComentarioLineal, ComentarioExtendido, ConstBooleana, ConstEnteraDecimal, ConstEnteraHexa, ConstDouble, ConstString, Operador;
 }
