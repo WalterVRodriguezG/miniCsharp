@@ -651,7 +651,7 @@ class AnalizadorFlex {
             }
           case 13: break;
           case 3: 
-            { retornoToken = yytext();      return ConstConstEnteraDecimal;
+            { retornoToken = yytext();      return ConstEnteraDecimal;
             }
           case 14: break;
           case 4: 

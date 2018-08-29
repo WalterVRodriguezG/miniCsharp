@@ -43,7 +43,7 @@ Operador = "+" | "-" | "*" | "/" | [\/] | "<" | "<=" | ">" | ">=" | "=" | "==" |
 {ComentarioLineal} {retornoToken = yytext();        return ComentarioLineal;}
 {ComentarioExtendido}  {retornoToken = yytext();    return ComentarioExtendido;}
 {ConstBooleana} {retornoToken = yytext();           return ConstBooleana;}
-{ConstEnteraDecimal} {retornoToken = yytext();      return ConstConstEnteraDecimal;}
+{ConstEnteraDecimal} {retornoToken = yytext();      return ConstEnteraDecimal;}
 {ConstEnteraHexa} {retornoToken = yytext();         return ConstEnteraHexa;}
 {ConstDouble} {retornoToken = yytext();             return ConstDouble;}
 {ConstString} {retornoToken = yytext();             return ConstString;}
