@@ -40,7 +40,7 @@ public class Index extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtListaToken = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtArchivoC = new javax.swing.JTextArea();
         jLayeredPane1 = new javax.swing.JLayeredPane();
@@ -74,9 +74,9 @@ public class Index extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Console", 1, 14)); // NOI18N
         jLabel2.setText("Tokens generados:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtListaToken.setColumns(20);
+        txtListaToken.setRows(5);
+        jScrollPane1.setViewportView(txtListaToken);
 
         txtArchivoC.setColumns(20);
         txtArchivoC.setRows(5);
@@ -97,7 +97,6 @@ public class Index extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        lblRutaC.setText("jLabel3");
         lblRutaC.setName("lblRutaC"); // NOI18N
         lblRutaC.setOpaque(true);
 
@@ -202,7 +201,7 @@ public class Index extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
@@ -210,7 +209,7 @@ public class Index extends javax.swing.JFrame {
 
     private void jMenuImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuImportarActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Hello World!!");
+        JOptionPane.showMessageDialog(null, "Cargando...");
         try {
             ImportarJFlex();
         } catch (IOException ex) {
@@ -221,17 +220,31 @@ public class Index extends javax.swing.JFrame {
 
     private void jMenuAnalizarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAnalizarCActionPerformed
         // TODO add your handling code here:
+        //Se invoca la conversión del archivo tomando poco referencia la ruta del archivo que se encuentra en el Label.
+        txtListaToken.setText(" ");
+        if (lblRutaC.getText()!= "") {
+            try {
+                GenerarListaTokens(lblRutaC.getText());
+            } catch (IOException ex) {
+                Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "Analizando... \n Archivo creado ubicado en:\n "+lblRutaC.getText());
+        }else{
+            JOptionPane.showMessageDialog(null,"Dirección de Archivo no válida. \nIngrese un archivo correcto.");
+        }
         
     }//GEN-LAST:event_jMenuAnalizarCActionPerformed
 
     private void jMenuArchivoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuArchivoCActionPerformed
+        lblRutaC.setText("");
         try {
             // Invocar al método para Cargar Archivo de C#
+            txtArchivoC.setText("");
             CargarC();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+     txtListaToken.setText("");
     }//GEN-LAST:event_jMenuArchivoCActionPerformed
 
     /**
@@ -296,9 +309,10 @@ public class Index extends javax.swing.JFrame {
     public static void createLexer(String ruta){
         File archivo = new File(ruta);
         jflex.Main.generate(archivo);
-        JOptionPane.showMessageDialog(null, "Archivo generado con Éxito!");
+        JOptionPane.showMessageDialog(null, "Archivo generado con Éxito! \n A continuación cargue un archivo de C# en el Menú Analizar.");
     }
     
+    //Métodos para Cargar Archivo de C# (.cs)
     public void CargarC() throws FileNotFoundException{
                //Variables para tomar la ruta del Archivo:
         String ruta = "";
@@ -320,11 +334,58 @@ public class Index extends javax.swing.JFrame {
             while (scn.hasNext()) {
              txtArchivoC.insert(scn.nextLine() + "\n", txtArchivoC.getText().length());
             }
-//System.out.println(ruta);
-            //createLexer(ruta);
+            JOptionPane.showMessageDialog(null, "Ahora seleccione la opción Analizar para mostrar el listado de Tokens");
         }else{
             JOptionPane.showMessageDialog(null, "Archivo No válido.");
         }
+    }
+    
+    public void GenerarListaTokens(String rutaArchivo) throws FileNotFoundException, IOException{
+        int contadorErrores = 0;
+        int fila = 0;
+        String resultados = "";
+        File archivoGenerado = new File("ListadoTokens.out");
+        
+        PrintWriter escritor;
+        Reader lector;
+        
+        lector = new BufferedReader(new FileReader(rutaArchivo));
+        
+        AnalizadorFlex lexer = new AnalizadorFlex(lector);
+        
+        while(true){
+            Token token = lexer.yylex();
+          
+            if (token ==null) {
+                resultados  = resultados + " FIN.";
+                txtListaToken.setText(resultados);
+                
+                if (contadorErrores >0) {
+                    escritor = new PrintWriter(archivoGenerado);
+                    escritor.print(txtListaToken.getText());
+                    escritor.close();
+                     fila++;
+                }else{
+                    escritor = new PrintWriter(archivoGenerado);
+                    escritor.print(txtListaToken.getText().toLowerCase());
+                    escritor.close();
+                     fila++;
+                }
+                return;
+            }
+              
+            switch(token){
+                case ERROR:
+                    resultados = resultados + "*** Error 1200, línea "+fila+ ".***   Caracter  no reconocido:" + lexer.retornoToken +" \n";
+                    contadorErrores = contadorErrores++;
+                    break;
+                default:
+                    resultados = resultados + lexer.retornoToken + "      linea " +fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n";
+                    break;
+            }
+           
+        }
+        
     }
     
 
@@ -343,9 +404,9 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblRutaC;
     private javax.swing.JTextArea txtArchivoC;
+    private javax.swing.JTextArea txtListaToken;
     // End of variables declaration//GEN-END:variables
 
 

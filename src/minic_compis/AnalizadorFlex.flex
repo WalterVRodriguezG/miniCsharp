@@ -7,28 +7,30 @@ Letra = [a-zA-ZÑñ]
 Digito = [0-9]
 NumeroEntero = {Digito}{Digito}*
 Palabra = {Letra}{Letra}*
+Cadena = ({Letra} | {Digito}| " " | "!" | "@" | "#" | "$" | "%" | "&" | [\/] | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "[" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [//] | [\|])*
 
 /* Estructura Lexicográfica */
 
 /* Espacios en blanco */
-white = [ \n\t\r\f]
+white = [ \n\t\r\f]+
 
 /* Palabras reservadas */
 P_Reservada = void | int | double | bool | string | class | interface | null | this  | extends | implements | for | while | if | else | return | break | New | NewArray
 
 /* Identificadores */
-Identificador = {Palabra} | {Letra}("_" | {Palabra} | {NumeroEntero})*
+Identificador = {Letra}("_" | {Palabra} | {NumeroEntero} | {Letra})*
 
 /* Comentarios */
-ComentarioLineal = "//"({Letra} | {Digito}| " " | "!" | "@" | "#" | "$" | "%" | "&" | [\/] | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "{" | "[" | "}" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [//] | [\|])*
-ComentarioExtendido = "/*" (({Letra} | {Digito}| {white} | " " | "!" | "@" | "#" | "$" | "%" | "&" | [\/] | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "{" | "[" | "}" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [//] | [\|])*)"*"[\/]
+ComentarioLineal = "//" {Cadena}
+/*ComentarioExtendido = ["/*"](({Letra}|{Digito}|{white}|{Cadena})*)["*/"]  | " " | "!" | "@" | "#" | "$" | "%" | "&" | [\/] | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "[" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [//] | [\|]  */
+ComentarioExtendido = ["/*"](({Letra} | {Digito})*)["*/"]
 
 /* Constantes */
 ConstBooleana =  true | false
 ConstEnteraDecimal = {NumeroEntero}
-ConstEnteraHexa = ([0X] | [0x])({NumeroEntero} | [aA] | [bB] | [cC] | [dD] | [eE] | [fF])({NumeroEntero} | [aA] | [bB] | [cC] | [dD] | [eE] | [fF])*
+ConstEnteraHexa = ("0X" | "0x")({NumeroEntero} | [aA] | [bB] | [cC] | [dD] | [eE] | [fF])(({NumeroEntero} | [aA] | [bB] | [cC] | [dD] | [eE] | [fF])*)
 ConstDouble = {NumeroEntero} "." ({NumeroEntero} | ([eE][-+]{NumeroEntero}))  
-ConstString = [\"]{ComentarioLineal}[\"]
+ConstString = (\"){Cadena}(\")
 
  /* Operadores */
 Operador = "+" | "-" | "*" | "/" | [\/] | "<" | "<=" | ">" | ">=" | "=" | "==" | "!=" | "&&" | [\||] | "!" | ";" | "," | "." | "[" | "]" | "(" | ")" | "{" | "}" | "[]" | "()" | "{}"
