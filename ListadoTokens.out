@@ -1,43 +1,385 @@
 *** error 100, línea 0.***   caracter  no reconocido:null 
  
-define      linea 1 is identificador    (valor = define) 
-procedure      linea 2 is identificador    (valor = procedure) 
-void      linea 3 is p_reservada    (valor = void) 
-*** error 100, línea 4.***   caracter  no reconocido:void 
+using      linea 1 is identificador    (valor = using) 
  
-define      linea 5 is identificador    (valor = define) 
-begin      linea 6 is identificador    (valor = begin) 
-{      linea 7 is operador    (valor = {) 
-*** error 100, línea 8.***   caracter  no reconocido:{ 
+system      linea 2 is identificador    (valor = system) 
  
-define      linea 9 is identificador    (valor = define) 
-end      linea 10 is identificador    (valor = end) 
-}      linea 11 is operador    (valor = }) 
-*** error 100, línea 12.***   caracter  no reconocido:} 
+;      linea 3 is operador    (valor = ;) 
  
-define      linea 13 is identificador    (valor = define) 
-binky      linea 14 is identificador    (valor = binky) 
-2      linea 15 is constenteradecimal    (valor = 2) 
-+      linea 16 is operador    (valor = +) 
-2      linea 17 is constenteradecimal    (valor = 2) 
-*      linea 18 is operador    (valor = *) 
-10      linea 19 is constenteradecimal    (valor = 10) 
-*** error 100, línea 20.***   caracter  no reconocido:10 
+using      linea 4 is identificador    (valor = using) 
  
-procedure      linea 21 is identificador    (valor = procedure) 
-main      linea 22 is identificador    (valor = main) 
-()      linea 23 is operador    (valor = ()) 
-*** error 100, línea 24.***   caracter  no reconocido:() 
+system      linea 5 is identificador    (valor = system) 
  
-begin      linea 25 is identificador    (valor = begin) 
-print      linea 26 is identificador    (valor = print) 
-(      linea 27 is operador    (valor = () 
-*** error 100, línea 28.***   caracter  no reconocido:( 
+.      linea 6 is operador    (valor = .) 
  
-binky      linea 29 is identificador    (valor = binky) 
-)      linea 30 is operador    (valor = )) 
-;      linea 31 is operador    (valor = ;) 
-*** error 100, línea 32.***   caracter  no reconocido:; 
+collections      linea 7 is identificador    (valor = collections) 
  
-end      linea 33 is identificador    (valor = end) 
+.      linea 8 is operador    (valor = .) 
+ 
+generic      linea 9 is identificador    (valor = generic) 
+ 
+;      linea 10 is operador    (valor = ;) 
+ 
+using      linea 11 is identificador    (valor = using) 
+ 
+system      linea 12 is identificador    (valor = system) 
+ 
+.      linea 13 is operador    (valor = .) 
+ 
+linq      linea 14 is identificador    (valor = linq) 
+ 
+;      linea 15 is operador    (valor = ;) 
+ 
+using      linea 16 is identificador    (valor = using) 
+ 
+system      linea 17 is identificador    (valor = system) 
+ 
+.      linea 18 is operador    (valor = .) 
+ 
+text      linea 19 is identificador    (valor = text) 
+ 
+;      linea 20 is operador    (valor = ;) 
+ 
+using      linea 21 is identificador    (valor = using) 
+ 
+system      linea 22 is identificador    (valor = system) 
+ 
+.      linea 23 is operador    (valor = .) 
+ 
+threading      linea 24 is identificador    (valor = threading) 
+ 
+.      linea 25 is operador    (valor = .) 
+ 
+tasks      linea 26 is identificador    (valor = tasks) 
+ 
+;      linea 27 is operador    (valor = ;) 
+ 
+namespace      linea 28 is identificador    (valor = namespace) 
+ 
+pruebainicial      linea 29 is identificador    (valor = pruebainicial) 
+ 
+{      linea 30 is operador    (valor = {) 
+ 
+class      linea 31 is p_reservada    (valor = class) 
+ 
+program      linea 32 is identificador    (valor = program) 
+ 
+{      linea 33 is operador    (valor = {) 
+ 
+static      linea 34 is identificador    (valor = static) 
+ 
+void      linea 35 is p_reservada    (valor = void) 
+ 
+main      linea 36 is identificador    (valor = main) 
+ 
+(      linea 37 is operador    (valor = () 
+ 
+string      linea 38 is p_reservada    (valor = string) 
+ 
+[]      linea 39 is operador    (valor = []) 
+ 
+args      linea 40 is identificador    (valor = args) 
+ 
+)      linea 41 is operador    (valor = )) 
+ 
+{      linea 42 is operador    (valor = {) 
+ 
+console      linea 44 is identificador    (valor = console) 
+ 
+.      linea 45 is operador    (valor = .) 
+ 
+writeline      linea 46 is identificador    (valor = writeline) 
+ 
+(      linea 47 is operador    (valor = () 
+ 
+"hola mundo!"      linea 48 is conststring    (valor = "hola mundo!") 
+ 
+)      linea 49 is operador    (valor = )) 
+ 
+;      linea 50 is operador    (valor = ;) 
+ 
+console      linea 51 is identificador    (valor = console) 
+ 
+.      linea 52 is operador    (valor = .) 
+ 
+readkey      linea 53 is identificador    (valor = readkey) 
+ 
+()      linea 54 is operador    (valor = ()) 
+ 
+;      linea 55 is operador    (valor = ;) 
+ 
+string      linea 56 is identificador    (valor = string) 
+ 
+nombre      linea 57 is identificador    (valor = nombre) 
+ 
+=      linea 58 is operador    (valor = =) 
+ 
+""      linea 59 is conststring    (valor = "") 
+ 
+;      linea 60 is operador    (valor = ;) 
+ 
+if      linea 61 is p_reservada    (valor = if) 
+ 
+(      linea 62 is operador    (valor = () 
+ 
+nombre      linea 63 is identificador    (valor = nombre) 
+ 
+==      linea 64 is operador    (valor = ==) 
+ 
+""      linea 65 is conststring    (valor = "") 
+ 
+)      linea 66 is operador    (valor = )) 
+ 
+{      linea 67 is operador    (valor = {) 
+ 
+console      linea 68 is identificador    (valor = console) 
+ 
+.      linea 69 is operador    (valor = .) 
+ 
+writeline      linea 70 is identificador    (valor = writeline) 
+ 
+(      linea 71 is operador    (valor = () 
+ 
+"ingrese su nombre:"      linea 72 is conststring    (valor = "ingrese su nombre:") 
+ 
+)      linea 73 is operador    (valor = )) 
+ 
+;      linea 74 is operador    (valor = ;) 
+ 
+}      linea 75 is operador    (valor = }) 
+ 
+else      linea 76 is p_reservada    (valor = else) 
+ 
+{      linea 77 is operador    (valor = {) 
+ 
+console      linea 79 is identificador    (valor = console) 
+ 
+.      linea 80 is operador    (valor = .) 
+ 
+writeline      linea 81 is identificador    (valor = writeline) 
+ 
+(      linea 82 is operador    (valor = () 
+ 
+"hola admin!"      linea 83 is conststring    (valor = "hola admin!") 
+ 
+)      linea 84 is operador    (valor = )) 
+ 
+;      linea 85 is operador    (valor = ;) 
+ 
+}      linea 86 is operador    (valor = }) 
+ 
+int      linea 87 is p_reservada    (valor = int) 
+ 
+numero      linea 88 is identificador    (valor = numero) 
+ 
+=      linea 89 is operador    (valor = =) 
+ 
+0x75d78d3ff      linea 90 is constenterahexa    (valor = 0x75d78d3ff) 
+ 
+;      linea 91 is operador    (valor = ;) 
+ 
+int      linea 92 is identificador    (valor = int) 
+ 
+numero2      linea 93 is identificador    (valor = numero2) 
+ 
+=      linea 94 is operador    (valor = =) 
+ 
+0x345564      linea 95 is constenterahexa    (valor = 0x345564) 
+ 
+gg      linea 96 is identificador    (valor = gg) 
+ 
+;      linea 97 is operador    (valor = ;) 
+ 
+int      linea 98 is identificador    (valor = int) 
+ 
+numero3      linea 99 is identificador    (valor = numero3) 
+ 
+=      linea 100 is operador    (valor = =) 
+ 
+0xabcde5      linea 101 is constenterahexa    (valor = 0xabcde5) 
+ 
+;      linea 102 is operador    (valor = ;) 
+ 
+int      linea 103 is p_reservada    (valor = int) 
+ 
+numero4      linea 104 is identificador    (valor = numero4) 
+ 
+=      linea 105 is operador    (valor = =) 
+ 
+"748400"      linea 106 is conststring    (valor = "748400") 
+ 
+;      linea 107 is operador    (valor = ;) 
+ 
+int      linea 108 is p_reservada    (valor = int) 
+ 
+numero5      linea 109 is identificador    (valor = numero5) 
+ 
+=      linea 110 is operador    (valor = =) 
+ 
+12.12      linea 111 is constdouble    (valor = 12.12) 
+.      linea 112 is operador    (valor = .) 
+ 
+12      linea 113 is constenteradecimal    (valor = 12) 
+ 
+e      linea 114 is identificador    (valor = e) 
+ 
++      linea 115 is operador    (valor = +) 
+ 
+2      linea 116 is constenteradecimal    (valor = 2) 
+ 
+;      linea 117 is operador    (valor = ;) 
+ 
+int      linea 118 is p_reservada    (valor = int) 
+ 
+numero6      linea 119 is identificador    (valor = numero6) 
+ 
+=      linea 120 is operador    (valor = =) 
+ 
+7484.899378      linea 121 is constdouble    (valor = 7484.899378) 
+;      linea 122 is operador    (valor = ;) 
+ 
+int      linea 123 is p_reservada    (valor = int) 
+ 
+numero7      linea 124 is identificador    (valor = numero7) 
+ 
+=      linea 125 is operador    (valor = =) 
+ 
+12.e+34      linea 126 is constdouble    (valor = 12.e+34) 
+;      linea 127 is operador    (valor = ;) 
+ 
+int      linea 128 is p_reservada    (valor = int) 
+ 
+numero8      linea 129 is identificador    (valor = numero8) 
+ 
+=      linea 130 is operador    (valor = =) 
+ 
+12.12      linea 131 is constdouble    (valor = 12.12) 
+e      linea 132 is identificador    (valor = e) 
+ 
++      linea 133 is operador    (valor = +) 
+ 
+5      linea 134 is constenteradecimal    (valor = 5) 
+ 
+;      linea 135 is operador    (valor = ;) 
+ 
+bool      linea 136 is p_reservada    (valor = bool) 
+ 
+variable1      linea 137 is identificador    (valor = variable1) 
+ 
+=      linea 138 is operador    (valor = =) 
+ 
+false      linea 139 is constbooleana    (valor = false) 
+ 
+;      linea 140 is operador    (valor = ;) 
+ 
+bool      linea 141 is p_reservada    (valor = bool) 
+ 
+variable2      linea 142 is identificador    (valor = variable2) 
+ 
+=      linea 143 is operador    (valor = =) 
+ 
+false      linea 144 is identificador    (valor = false) 
+ 
+;      linea 145 is operador    (valor = ;) 
+ 
+bool      linea 146 is p_reservada    (valor = bool) 
+ 
+variable3      linea 147 is identificador    (valor = variable3) 
+ 
+=      linea 148 is operador    (valor = =) 
+ 
+false      linea 149 is constbooleana    (valor = false) 
+ 
+;      linea 150 is operador    (valor = ;) 
+ 
+bool      linea 152 is p_reservada    (valor = bool) 
+ 
+variable4      linea 153 is identificador    (valor = variable4) 
+ 
+=      linea 154 is operador    (valor = =) 
+ 
+true      linea 155 is constbooleana    (valor = true) 
+ 
+;      linea 156 is operador    (valor = ;) 
+ 
+int      linea 157 is p_reservada    (valor = int) 
+ 
+numero9      linea 158 is identificador    (valor = numero9) 
+ 
+=      linea 159 is operador    (valor = =) 
+ 
+0x0      linea 160 is constenterahexa    (valor = 0x0) 
+ 
+;      linea 161 is operador    (valor = ;) 
+ 
+int      linea 162 is p_reservada    (valor = int) 
+ 
+numero10      linea 163 is identificador    (valor = numero10) 
+ 
+=      linea 164 is operador    (valor = =) 
+ 
+0x12ae      linea 165 is constenterahexa    (valor = 0x12ae) 
+ 
+bool      linea 166 is p_reservada    (valor = bool) 
+ 
+variable4      linea 167 is identificador    (valor = variable4) 
+ 
+=      linea 168 is operador    (valor = =) 
+ 
+true      linea 169 is constbooleana    (valor = true) 
+ 
+;      linea 170 is operador    (valor = ;) 
+ 
+int      linea 171 is p_reservada    (valor = int) 
+ 
+numero9      linea 172 is identificador    (valor = numero9) 
+ 
+=      linea 173 is operador    (valor = =) 
+ 
+0x0      linea 174 is constenterahexa    (valor = 0x0) 
+ 
+;      linea 175 is operador    (valor = ;) 
+ 
+int      linea 176 is p_reservada    (valor = int) 
+ 
+numero10      linea 177 is identificador    (valor = numero10) 
+ 
+=      linea 178 is operador    (valor = =) 
+ 
+0x12ae      linea 179 is constenterahexa    (valor = 0x12ae) 
+ 
+while      linea 180 is p_reservada    (valor = while) 
+ 
+(      linea 181 is operador    (valor = () 
+ 
+string      linea 182 is identificador    (valor = string) 
+ 
+==      linea 183 is operador    (valor = ==) 
+ 
+null      linea 184 is p_reservada    (valor = null) 
+ 
+or      linea 185 is identificador    (valor = or) 
+ 
+string      linea 186 is identificador    (valor = string) 
+ 
+==      linea 187 is operador    (valor = ==) 
+ 
+"null"      linea 188 is conststring    (valor = "null") 
+ 
+)      linea 189 is operador    (valor = )) 
+ 
+new      linea 190 is p_reservada    (valor = new) 
+ 
+implements      linea 191 is p_reservada    (valor = implements) 
+ 
+class      linea 192 is p_reservada    (valor = class) 
+ 
+;      linea 193 is operador    (valor = ;) 
+ 
+}      linea 195 is operador    (valor = }) 
+ 
+}      linea 196 is operador    (valor = }) 
+ 
+}      linea 197 is operador    (valor = }) 
+ 
  fin.

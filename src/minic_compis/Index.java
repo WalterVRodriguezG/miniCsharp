@@ -74,10 +74,12 @@ public class Index extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Console", 1, 14)); // NOI18N
         jLabel2.setText("Tokens generados:");
 
+        txtListaToken.setEditable(false);
         txtListaToken.setColumns(20);
         txtListaToken.setRows(5);
         jScrollPane1.setViewportView(txtListaToken);
 
+        txtArchivoC.setEditable(false);
         txtArchivoC.setColumns(20);
         txtArchivoC.setRows(5);
         jScrollPane2.setViewportView(txtArchivoC);
@@ -134,11 +136,11 @@ public class Index extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(276, 276, 276)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(261, 261, 261))
+                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addGap(5, 5, 5)
                 .addComponent(lblRutaC)
                 .addContainerGap(66, Short.MAX_VALUE))
         );
@@ -365,24 +367,68 @@ public class Index extends javax.swing.JFrame {
                     escritor = new PrintWriter(archivoGenerado);
                     escritor.print(txtListaToken.getText());
                     escritor.close();
-                    // fila++;
+                    
                 }else{
                     escritor = new PrintWriter(archivoGenerado);
                     escritor.print(txtListaToken.getText().toLowerCase());
                     escritor.close();
-                     //fila++;
+
                 }
                 return;
             }
               
             switch(token){
+                case ComentarioLineal:
+                    //resultados  = resultados + token + "    linea "+ fila + " is " + token + "\n \n"; 
+                     //resultados = resultados + "Comentario Lineal. \n \n";
+                    System.out.println("El resultado de comentario lineal es: "+resultados+"\n \n");
+                    break;
+                case ComentarioExtendido:
+                //resultados =resultados + "Comentario Extendido. \n \n";
+                    System.out.println("El resultado de comentario extendido es: "+resultados+"\n \n");
+                    break;
+                    
+                case P_Reservada:
+                     resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    break;
+                    
+                case Identificador:
+                     resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    break;
+                    
+                case ConstBooleana:
+                     resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    break;
+                    
+                case ConstEnteraDecimal:
+                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    break;
+                    
+                case ConstEnteraHexa:
+                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    break;
+                    
+                case ConstDouble:
+                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n";
+                    break;
+                    
+                case ConstString:
+                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    break;
+                    
+                case Operador:
+                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    break;
+                    
                 case ERROR:
-                    resultados = resultados + "*** Error 100, línea "+fila+ ".***   Caracter  no reconocido:" + lexer.retornoToken +" \n \n";
-                    contadorErrores = contadorErrores++;
+                    resultados = resultados + "*** Error 100, línea "+ fila + ".***   Caracter  no reconocido:" + lexer.retornoToken +" \n \n";
+                    //contadorErrores = contadorErrores++;
                     break;
-                default:
-                    resultados = resultados + lexer.retornoToken + "      linea " +fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n";
-                    break;
+                    
+//                default:
+//                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n";
+//                    break;
+ 
             }
            fila++;
         }
