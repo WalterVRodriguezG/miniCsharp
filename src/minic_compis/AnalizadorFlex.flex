@@ -3,6 +3,8 @@ import static minic_compis.Token.*;
 %%
 %class AnalizadorFlex
 %type Token
+%column
+%line
 Letra = [a-zA-ZÑñ]
 Digito = [0-9]
 NumeroEntero = {Digito}{Digito}*
@@ -35,21 +37,28 @@ ComentarioExtendido = [/*] ({Cadena} | {white})* [*/]
  /* Operadores */
 Operador = "+" | "-" | "*" | "/" | [\/] | "<" | "<=" | ">" | ">=" | "=" | "==" | "!=" | "&&" | [\||] | "!" | ";" | "," | "." | "[" | "]" | "(" | ")" | "{" | "}" | "[]" | "()" | "{}"
 
+/* Posibles Errores */
+CadenaIncompleta = (\"){Cadena}
+
 %{
     public String retornoToken;
+    public int fila;
+    public int columna;
+    public int tamanio;
 %}
 %%
 {white} {/* Ignore */}
-{P_Reservada} {retornoToken = yytext();             return P_Reservada;}
-{ComentarioExtendido}  {retornoToken = yytext();    return ComentarioExtendido;}
-{ComentarioLineal} {retornoToken = yytext();        return ComentarioLineal;}
+{P_Reservada} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;              return P_Reservada;}
+{ComentarioExtendido}  {retornoToken = yytext();    fila = yyline+1; columna = yycolumn+1;  return ComentarioExtendido;}
+{ComentarioLineal} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;         return ComentarioLineal;}
 
-{ConstBooleana} {retornoToken = yytext();           return ConstBooleana;}
-{ConstEnteraDecimal} {retornoToken = yytext();      return ConstEnteraDecimal;}
-{ConstEnteraHexa} {retornoToken = yytext();         return ConstEnteraHexa;}
-{ConstDouble} {retornoToken = yytext();             return ConstDouble;}
-{ConstString} {retornoToken = yytext();             return ConstString;}
-{Operador} {retornoToken = yytext();                return Operador;}
-{Identificador} {retornoToken = yytext();           return Identificador;}
+{ConstBooleana} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;            return ConstBooleana;}
+{ConstEnteraDecimal} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;       return ConstEnteraDecimal;}
+{ConstEnteraHexa} {retornoToken = yytext();   fila = yyline+1; columna = yycolumn+1;        return ConstEnteraHexa;}
+{ConstDouble} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;              return ConstDouble;}
+{ConstString} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;              return ConstString;}
+{Operador} {retornoToken = yytext();  fila = yyline+1; columna = yycolumn+1;                return Operador;}
+{Identificador} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;            return Identificador;}
+{CadenaIncompleta} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;         return CadenaIncompleta;}
 .   {return ERROR;}
 

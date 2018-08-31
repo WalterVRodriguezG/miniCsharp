@@ -135,7 +135,7 @@ public class Index extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(276, 276, 276)
+                        .addGap(272, 272, 272)
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
@@ -161,7 +161,7 @@ public class Index extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Analizar");
+        jMenu2.setText("Análisis Léxico");
 
         jMenuArchivoC.setText("Cargar archivo C#");
         jMenuArchivoC.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +212,7 @@ public class Index extends javax.swing.JFrame {
 
     private void jMenuImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuImportarActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Cargando...");
+        //JOptionPane.showMessageDialog(null, "Cargando...");
         try {
             ImportarJFlex();
         } catch (IOException ex) {
@@ -356,24 +356,25 @@ public class Index extends javax.swing.JFrame {
         
         AnalizadorFlex lexer = new AnalizadorFlex(lector);
         
+        
         while(true){
-            Token token = lexer.yylex();
+            Token token = lexer.yylex();    
           
             if (token ==null) {
                 resultados  = resultados + " FIN.";
                 txtListaToken.setText(resultados);
                 
-                if (contadorErrores >0) {
+                //if (contadorErrores >0) {
                     escritor = new PrintWriter(archivoGenerado);
                     escritor.print(txtListaToken.getText());
                     escritor.close();
                     
-                }else{
-                    escritor = new PrintWriter(archivoGenerado);
-                    escritor.print(txtListaToken.getText().toLowerCase());
-                    escritor.close();
+                //}else{
+//                    escritor = new PrintWriter(archivoGenerado);
+//                    escritor.print(txtListaToken.getText().toLowerCase());
+//                    escritor.close();
 
-                }
+                //}
                 return;
             }
               
@@ -381,56 +382,77 @@ public class Index extends javax.swing.JFrame {
                 case ComentarioLineal:
                     //resultados  = resultados + token + "    linea "+ fila + " is " + token + "\n \n"; 
                      //resultados = resultados + "Comentario Lineal. \n \n";
-                    System.out.println("El resultado de comentario lineal es: "+resultados+"\n \n");
+                    System.out.println("El resultado de comentario lineal es: "+lexer.retornoToken+"\n \n");
                     break;
                 case ComentarioExtendido:
                 //resultados =resultados + "Comentario Extendido. \n \n";
-                    System.out.println("El resultado de comentario extendido es: "+resultados+"\n \n");
+                    System.out.println("El resultado de comentario extendido es: "+lexer.retornoToken+"\n \n");
                     break;
                     
                 case P_Reservada:
-                     resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                     resultados = resultados + lexer.retornoToken + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
+                     
                     break;
                     
                 case Identificador:
-                     resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                     resultados = resultados + lexer.retornoToken + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
                     break;
                     
                 case ConstBooleana:
-                     resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                     resultados = resultados + lexer.retornoToken + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
                     break;
                     
                 case ConstEnteraDecimal:
-                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    resultados = resultados + lexer.retornoToken + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
                     break;
                     
                 case ConstEnteraHexa:
-                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    resultados = resultados + lexer.retornoToken + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
                     break;
                     
                 case ConstDouble:
-                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n";
+                    resultados = resultados + lexer.retornoToken + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
                     break;
                     
                 case ConstString:
-                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    int tamanio = lexer.yylength();
+                    String nuevaCadena = "";
+                    if (tamanio> 32) {
+                        nuevaCadena = lexer.retornoToken.substring(1, 32);
+                        resultados = resultados + nuevaCadena + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +nuevaCadena+"  ) \n \n";
+                    }else{
+                        resultados = resultados + lexer.retornoToken + "    linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
+                    }
+
                     break;
                     
                 case Operador:
-                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n \n";
+                    resultados = resultados + lexer.retornoToken + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es  "+ token + "    (valor =  " +lexer.retornoToken+"  ) \n \n";
                     break;
+                
+                case CadenaIncompleta:
+                    resultados = resultados + token + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es un String incompleto.  \n \n";
+                    token = null;
+                    return;
+                    //break;
+                 
+                
+                    
+//                case SinFinalComentarioExt:
+//                    resultados = resultados + token + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es un comentario multilínea incompleto.  \n \n";
+//                    token = null;
+//                    break;
                     
                 case ERROR:
-                    resultados = resultados + "*** Error 100, línea "+ fila + ".***   Caracter  no reconocido:" + lexer.retornoToken +" \n \n";
+                    resultados = resultados + "*** Error 100, línea " + lexer.fila +  "  y columna    "+ lexer.columna+ ".***   Caracter  no reconocido:" + lexer.retornoToken +" \n \n";
                     //contadorErrores = contadorErrores++;
                     break;
                     
 //                default:
 //                    resultados = resultados + lexer.retornoToken + "      linea " + fila +  " is " + token + "    (valor = " +lexer.retornoToken+") \n";
 //                    break;
- 
             }
-           fila++;
+
         }
         
     }

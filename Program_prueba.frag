@@ -18,7 +18,7 @@ namespace PruebaInicial
                 Console.WriteLine("Ingrese su nombre:");
             }else{
                 //No se ingresa nada
-                Console.WriteLine("Hola Admin!");
+                Console.WriteLine("Hola Admin, este es un analizador lexico desarrollado en el curso compiladores.!");
             }
             int numero = 0x75d78d3ff;
             Int numero2 = 0X345564gg;
@@ -48,7 +48,7 @@ namespace PruebaInicial
             /*Esta es la seccion de comentario extendido
             Linea 2%$%$&@
             Linea 3
-             */
+            
             
         }
     }
