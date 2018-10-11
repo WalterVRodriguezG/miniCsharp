@@ -9,7 +9,51 @@ Letra = [a-zA-ZÑñ]
 Digito = [0-9]
 NumeroEntero = {Digito}{Digito}*
 Palabra = {Letra}{Letra}*
-Cadena = ({Letra} | {Digito}| " " | "!" | "@" | "#" | "$" | "%" | "&" | [\/] | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "[" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [//] | [\|])*
+
+/* Cadena = ({Letra} | {Digito}| " " | "!" | "@" | "#" | "$" | "%" | "&" | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "[" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [\|])* */
+
+/*  Signos  */
+ExclamacionAbierto = "¡"
+ExclamacionCerrado = "!"
+Arroba = "@"
+Sharp = "#"
+Dollar = "$"
+Porcentaje = "%"
+Ampersan = "&"
+ParentesisAbierto = "("
+ParentesisCerrado = ")"
+Igual = "="
+QuestionAbierto = "¿"
+QuestionCerrado = "?"
+Suma = "+"
+Mult = "*"
+CorcheteAbierto = "["
+CorcheteCerrado = "]"
+LlaveAbierta = "{"
+LlaveCerrada = "}"
+Coma = ","
+PuntoComa = ";"
+Punto = "."
+DosPuntos = ":"
+GuionBajo = "_"
+Resta = "-"
+Menor = "<"
+Mayor = ">"
+Espacio = " "
+Division = "/"
+BarraInvertida = "\"
+Or = "|"
+MayorIgual = {Mayor}{Igual}
+MenorIgual = {Menor}{Igual}
+Igual2 = {IgualIgual}
+Distinto = {ExclamacionCerrado}{Igual}
+Corchetes = "{}"
+Llaves = "[]"
+Parentesis = "()"
+
+Simbolos = ExclamacionAbierto | ExclamacionCerrado | Arroba | Sharp | Dollar | Porcentaje | Ampersan | ParentesisAbierto | ParentesisCerrado | Igual| QuestionAbierto| QuestionCerrado| Suma | Mult | CorcheteAbierto | CorcheteCerrado | LlaveAbierta | LlaveCerrada | Coma | PuntoComa | Punto | DosPuntos | GuionBajo | Resta | Menor | Mayor | Espacio | Division | BarraInvertida | Or | MayorIgual | MenorIgual | Igual2 | Distinto | Corchetes | Llaves | Parentesis
+
+Cadena = ({Letra} | {Digito}| {Simbolos})*
 
 /* Estructura Lexicográfica */
 
@@ -17,7 +61,7 @@ Cadena = ({Letra} | {Digito}| " " | "!" | "@" | "#" | "$" | "%" | "&" | [\/] | "
 white = [ \n\t\r\f]+
 
 /* Palabras reservadas */
-P_Reservada = void | int | double | bool | string | class | interface | null | this  | extends | implements | for | while | if | else | return | break | New | NewArray
+P_Reservada = void | int | double | bool | string | class | interface | null | this  | extends | implements | for | while | if | else | return | break | New | NewArray | Print | ReadInteger | ReadLine | Malloc | extends | implements | interface
 
 /* Constantes */
 ConstBooleana =  false | true
@@ -27,18 +71,19 @@ ConstDouble = {NumeroEntero} "." ({NumeroEntero} | ([eE][-+]{NumeroEntero}))
 ConstString = (\"){Cadena}(\")
 
 /* Identificadores */
-Identificador = {Letra}("_" | {Palabra} | {NumeroEntero} | {Letra})*
+Identificador = {Letra}(GuionBajo | {Palabra} | {NumeroEntero} | {Letra})*
 
 /* Comentarios */
-ComentarioLineal = [//] {Cadena}
-/*ComentarioExtendido = ["/*"](({Letra}|{Digito}|{white}|{Cadena})*)["*/"]  | " " | "!" | "@" | "#" | "$" | "%" | "&" | [\/] | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "[" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [//] | [\|]  */
-ComentarioExtendido = [/*] ({Cadena} | {white})* [*/]
+
+ComentarioLineal = {Division}{Division} {Cadena}
+ComentarioExtendido = {Division}{Mult}(({Letra}|{Digito}|{white}|{Cadena})*){Mult}{Division}
+/*ComentarioExtendido = [/*] ({Cadena} | {white})* [*/]*/
 
  /* Operadores */
-Operador = "+" | "-" | "*" | "/" | [\/] | "<" | "<=" | ">" | ">=" | "=" | "==" | "!=" | "&&" | [\||] | "!" | ";" | "," | "." | "[" | "]" | "(" | ")" | "{" | "}" | "[]" | "()" | "{}"
+Operador = Suma | Resta | Mult | Division | Division | Menor | MenorIgual| Mayor | MayorIgual | Igual | Igual2 | Distinto | {Ampersan}{Ampersan} | {Or}{Or} | ExclamacionCerrado | PuntoComa | Coma | Punto | LlaveAbierta | LlaveCerrada | ParentesisAbierto | ParentesisCerrado | LlaveAbierta | LlaveCerrada | {CorcheteAbierto}{CorcheteCerrado} | {ParentesisAbierto}{ParentesisCerrado} | {LlaveAbierta}{LlaveCerrada}
 
 /* Posibles Errores */
-CadenaIncompleta = (\"){Cadena}
+CadenaIncompleta = {BarraInvertida}{Cadena}
 
 %{
     public String retornoToken;
@@ -49,8 +94,10 @@ CadenaIncompleta = (\"){Cadena}
 %%
 {white} {/* Ignore */}
 {P_Reservada} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;              return P_Reservada;}
-{ComentarioExtendido}  {retornoToken = yytext();    fila = yyline+1; columna = yycolumn+1;  return ComentarioExtendido;}
+
 {ComentarioLineal} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;         return ComentarioLineal;}
+{ComentarioExtendido}  {retornoToken = yytext();    fila = yyline+1; columna = yycolumn+1;  return ComentarioExtendido;}
+
 
 {ConstBooleana} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;            return ConstBooleana;}
 {ConstEnteraDecimal} {retornoToken = yytext(); fila = yyline+1; columna = yycolumn+1;       return ConstEnteraDecimal;}

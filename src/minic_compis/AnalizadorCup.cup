@@ -1,0 +1,199 @@
+package minic;
+import java_cup.runtime.*;
+
+parser code {:
+    
+    //Mostrar Errores:
+    public void report_error(String message, Object info) {
+        StringBuilder m = new StringBuilder("Error");
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+            if (s.left >= 0) {                
+                m.append(" in line "+(s.left+1));
+                if (s.right >= 0)
+                    m.append(", column "+(s.right+1));
+            }
+        }
+        m.append(" : "+message);
+        System.err.println(m);
+    }
+   
+    // RIP
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+
+    
+    public static void main(String[] args){
+        try {
+            AnalizadorSintactico asin = new AnalizadorSintactico(
+                    new AnalizadorLexico( new FileReader(args[0])));
+            Object result = asin.parse().value;
+            System.out.println("\n*** Resultados finales ***");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+:};
+
+    /* ------------Declaracion de simbolos terminales y no terminales---------- *
+
+            /*--------------TERMINALES-----------*/
+terminal void, int, double, bool, string, class, interface, null, this, extends, implements, for, while, if, else, return, break, New, NewArray, Print, ReadInteger, ReadLine, Malloc, Identificador, GETBYTE, SETBYTE, ExclamacionAbierto, ExclamacionCerrado, Arroba, Sharp, Dollar, Porcentaje, Ampersan, ParentesisAbierto, ParentesisCerrado, Suma, Igual, QuestionAbierto, QuestionCerrado, Mult, CorcheteAbierto, CorcheteCerrado, LlaveAbierta, LlaveCerrada, Coma, PuntoComa, Punto, DosPuntos, GuionBajo, Resta, Menor, Mayor, Espacio, Division, BarraInvertida, Or, MayorIgual, MenorIgual, Igual2, Distinto, Corchetes, Llaves, Parentesis;
+terminal Object intConstant, doubleConstant, boolConstant, stringConstant, hexConstant;
+
+            /*--------------NO TERMINALES-----------*/
+non terminal  Start, Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtVar, StmtStmt, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont;
+
+            /*--------------PRECEDENCIAS-----------*/
+precedence left Suma, Resta, Mult, Division, Porcentaje;
+precedence left Menor, MenorIgual, Mayor, MayorIgual, Igual, Igual2, Ampersan, Or, ExclamacionCerrado ;
+precedence left else;
+precedence left Identificador;
+
+            /* -------------------GRAMATICA MINI C#------------------------ */
+
+Start ::= Program ;
+
+Program ::= Program Decl
+| Decl ;
+
+Decl ::= VariableDecl
+| FunctionDecl
+| ClassDecl
+| InterfaceDecl ;
+
+VariableDecl ::= Variable PuntoComa ;
+
+Variable ::= Type Identificador ;
+
+Type ::= int
+| double
+| bool
+| string
+| Identificador
+| Type Corchetes ;
+
+FunctionDecl ::= Type FuncCont
+| void FuncCont ;
+
+FuncCont ::= Identificador ParentesisAbierto Formals ParentesisCerrado StmtBlock;
+
+Formals ::= Formals Coma Variable
+| Variable
+| /* ε */ ;
+
+ClassDecl ::= class Identificador Ext Imp LlaveAbierta ClassField LlaveCerrada ;
+
+Ext ::= extends Identificador
+| /* ε */ ;
+
+Imp ::= implements ImpID
+| /* ε */ ;
+
+ImpID ::= ImpID Coma Identificador
+| Identificador ;
+
+ClassField ::= ClassField Field
+| /* ε */ ;
+
+Field ::= Field VariableDecl
+| Field FunctionDecl ;
+
+InterfaceDecl ::= interface Identificador LlaveAbierta InterfaceProt LlaveCerrada ;
+
+InterfaceProt ::= InterfaceProt Prototype
+| /* ε */ ;
+
+Prototype ::= Type ProtCont
+| void ProtCont;
+
+ProtCont ::= Identificador ParentesisAbierto Formals ParentesisCerrado PuntoComa ;
+
+StmtBlock ::= LlaveAbierta StmtVar StmtStmt LlaveCerrada ;
+
+StmtVar ::= StmtVar VariableDecl
+| /* ε */ ;
+
+StmtStmt ::= StmtStmt Stmt
+| /* ε */ ;
+
+Stmt ::= StmtExpr PuntoComa
+| IfStmt
+| WhileStmt
+| ForStmt
+| BreakStmt
+| ReturnStmt
+| PrintStmt
+| StmtBlock ;
+
+StmtExpr ::= Expr
+| /* ε */ ;
+
+IfStmt ::= if ParentesisAbierto Expr ParentesisCerrado Stmt ElseIfStmt ;
+
+ElseIfStmt ::= else Stmt
+| /* ε */ ;
+
+WhileStmt ::= while ParentesisAbierto Expr ParentesisCerrado Stmt ;
+
+ForStmt ::= for ParentesisAbierto StmtExpr PuntoComa Expr PuntoComa StmtExpr ParentesisCerrado Stmt ;
+
+ReturnStmt ::= return StmtExpr PuntoComa ;
+
+BreakStmt ::= break PuntoComa ;
+
+PrintStmt ::= Print ParentesisAbierto ExprPrint ParentesisCerrado PuntoComa ;
+
+ExprPrint ::= ExprPrint Coma Expr
+| Expr ;
+
+Expr ::= LValue Igual Expr
+| Constant
+| LValue
+| this
+| Call 
+| ParentesisAbierto Expr ParentesisCerrado 
+| Expr Suma Expr
+| Expr Resta Expr
+| Expr Mult Expr
+| Expr Division Expr
+| Expr Porcentaje Expr
+| Resta Expr
+| Expr Menor Expr
+| Expr MenorIgual Expr
+| Expr Mayor Expr
+| Expr MayorIgual Expr
+| Expr Igual2 Expr
+| Expr Distinto Expr
+| Expr Ampersan Ampersan Expr
+| Expr Or Or Expr
+| ExclamacionCerrado Expr
+| New ParentesisAbierto Identificador ParentesisCerrado
+| NewArray ParentesisAbierto Expr Coma Type ParentesisCerrado
+| ReadInteger Parentesis
+| ReadLine Parentesis
+| Malloc ParentesisAbierto Expr ParentesisCerrado ;
+
+LValue ::= Identificador
+| Expr Punto Identificador 
+| Expr CorcheteAbierto Expr CorcheteCerrado ;
+
+Call ::= Identificador ParentesisAbierto Actuals ParentesisCerrado 
+| Expr Punto Identificador CallCont
+| Expr Punto LibCall CallCont ;
+
+CallCont ::= ParentesisAbierto Actuals ParentesisCerrado ;
+
+LibCall ::= GETBYTE ParentesisAbierto Expr ParentesisCerrado
+| SETBYTE ParentesisAbierto Expr Coma Expr ParentesisCerrado ;
+
+Actuals ::= ExprPrint
+| /* ε */ ;
+
+Constant ::= intConstant
+| doubleConstant
+| boolConstant
+| stringConstant
+| null ;
