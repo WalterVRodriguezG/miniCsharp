@@ -1,10 +1,24 @@
 package minic_compis;
 import static minic_compis.Token.*;
+import java_cup.runtime.*;
 %%
 %class AnalizadorFlex
-%type Token
+
 %column
 %line
+%cup
+
+%{
+    private Symbol symbol(int type){
+        return new Symbol(type, yyline, yycolumn);
+    }
+
+    private Symbol symbol(int type, Object value){
+        return new Symbol(type, yyline, yycolumn, value);
+    }
+%}
+
+
 Letra = [a-zA-ZÑñ]
 Digito = [0-9]
 NumeroEntero = {Digito}{Digito}*
@@ -92,6 +106,9 @@ CadenaIncompleta = {BarraInvertida}{Cadena}
     public int tamanio;
 %}
 %%
+
+<YYINITIAL>{
+
 "¡" {return symbol(sym.ExclamacionAbierto, New String(yytext()));}
 "!" {return symbol(sym.ExclamacionCerrado, New String(yytext()));}
 "@" {return symbol(sym.Arroba, New String(yytext()));}
@@ -145,3 +162,4 @@ CadenaIncompleta = {BarraInvertida}{Cadena}
 {CadenaIncompleta} {return symbol(sym.CadenaIncompleta, New String(yytext()));}
 .   {system.out.println("Error no registrado en analizador.")};
 
+}

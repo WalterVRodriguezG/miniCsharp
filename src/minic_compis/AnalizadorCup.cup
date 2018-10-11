@@ -2,7 +2,8 @@ package minic;
 import java_cup.runtime.*;
 
 parser code {:
-    
+/* ------------ Manejo de Errores ---------- */    
+
     //Mostrar Errores:
     public void report_error(String message, Object info) {
         StringBuilder m = new StringBuilder("Error");
@@ -37,7 +38,7 @@ parser code {:
     }
 :};
 
-    /* ------------Declaracion de simbolos terminales y no terminales---------- *
+    /* ------------Declaracion de simbolos terminales y no terminales---------- */
 
             /*--------------TERMINALES-----------*/
 terminal void, int, double, bool, string, class, interface, null, this, extends, implements, for, while, if, else, return, break, New, NewArray, Print, ReadInteger, ReadLine, Malloc, Identificador, GETBYTE, SETBYTE, ExclamacionAbierto, ExclamacionCerrado, Arroba, Sharp, Dollar, Porcentaje, Ampersan, ParentesisAbierto, ParentesisCerrado, Suma, Igual, QuestionAbierto, QuestionCerrado, Mult, CorcheteAbierto, CorcheteCerrado, LlaveAbierta, LlaveCerrada, Coma, PuntoComa, Punto, DosPuntos, GuionBajo, Resta, Menor, Mayor, Espacio, Division, BarraInvertida, Or, MayorIgual, MenorIgual, Igual2, Distinto, Corchetes, Llaves, Parentesis;
