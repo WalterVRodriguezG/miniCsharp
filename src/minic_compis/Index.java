@@ -6,6 +6,8 @@
 package minic_compis;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +51,7 @@ public class Index extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuImportar = new javax.swing.JMenuItem();
+        jMenuCUP = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuArchivoC = new javax.swing.JMenuItem();
         jMenuAnalizarC = new javax.swing.JMenuItem();
@@ -159,6 +162,14 @@ public class Index extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuImportar);
 
+        jMenuCUP.setText("Importar CUP");
+        jMenuCUP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCUPActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuCUP);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Análisis Léxico");
@@ -224,6 +235,7 @@ public class Index extends javax.swing.JFrame {
     private void jMenuAnalizarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAnalizarCActionPerformed
         // TODO add your handling code here:
         //Se invoca la conversión del archivo tomando poco referencia la ruta del archivo que se encuentra en el Label.
+       /*
         txtListaToken.setText(" ");
         if (lblRutaC.getText()!= "") {
             try {
@@ -235,7 +247,7 @@ public class Index extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null,"Dirección de Archivo no válida. \nIngrese un archivo correcto.");
         }
-        
+     */   
     }//GEN-LAST:event_jMenuAnalizarCActionPerformed
 
     private void jMenuArchivoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuArchivoCActionPerformed
@@ -249,6 +261,11 @@ public class Index extends javax.swing.JFrame {
         }
      txtListaToken.setText("");
     }//GEN-LAST:event_jMenuArchivoCActionPerformed
+
+    private void jMenuCUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCUPActionPerformed
+        // TODO add your handling code here:
+        ImportarCUP();
+    }//GEN-LAST:event_jMenuCUPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,7 +332,28 @@ public class Index extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Archivo generado con Éxito! \n A continuación cargue un archivo de C# en el Menú Analizar.");
     }
     
-    //Métodos para Cargar Archivo de C# (.cs)
+    public void ImportarCUP(){
+        String ruta = "";
+        JFileChooser abrirArchivo = new JFileChooser();
+       //Filtro
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.CUP","cup");
+        abrirArchivo.setFileFilter(filtro);
+       
+        int seleccion = abrirArchivo.showOpenDialog(jMenu1);
+       
+        //Tomando la ruta al dar aceptar al cuadro de dialogo.
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File archivo = abrirArchivo.getSelectedFile();
+            
+            ruta = archivo.getAbsolutePath();
+            System.out.println(ruta);
+            createLexer(ruta);
+        }else{
+            JOptionPane.showMessageDialog(null, "Archivo No válido.");
+        }
+    }    
+
+//Métodos para Cargar Archivo de C# (.cs)
     public void CargarC() throws FileNotFoundException{
                //Variables para tomar la ruta del Archivo:
         String ruta = "";
@@ -342,7 +380,7 @@ public class Index extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Archivo No válido.");
         }
     }
-    
+    /*
     public void GenerarListaTokens(String rutaArchivo) throws FileNotFoundException, IOException{
         int contadorErrores = 0;
         int fila = 0;
@@ -435,9 +473,7 @@ public class Index extends javax.swing.JFrame {
                     token = null;
                     return;
                     //break;
-                 
-                
-                    
+                                     
 //                case SinFinalComentarioExt:
 //                    resultados = resultados + token + "      linea   " + lexer.fila +  "  y columna    "+ lexer.columna + " es un comentario multilínea incompleto.  \n \n";
 //                    token = null;
@@ -457,6 +493,57 @@ public class Index extends javax.swing.JFrame {
         
     }
     
+    */
+    
+    public static void CreateCup(String ruta){
+        File archivo = new File(ruta);
+        jflex.Main.generate(archivo);
+        JOptionPane.showMessageDialog(null, "Archivo generado con Exito! \n  A continuacion cargue un archivo de prueba. ");
+    }
+     public void GenerarArchivoCUP(String ruta){
+         File archivo = new File(ruta);
+         String[] sintactico = {"-parser","asintactico",ruta};
+         
+        try {
+            java_cup.Main.main(sintactico);
+        } catch (IOException ex) {
+            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+         moverArchivo("sintactico.java");
+         moverArchivo("sym.java");
+     }
+    
+     public static boolean moverArchivo(String fileName)
+    {
+        boolean fileMoved = false;
+        File file =  new File(fileName);
+        if (file.exists())
+        {
+            System.out.println("moving cup generated files to the correct path");
+            Path currentRelativePath = Paths.get("");
+            String newDir = currentRelativePath.toAbsolutePath().toString()
+                    + File.separator + "src" + File.separator
+                    + "Lexic" + File.separator + file.getName();
+            if (file.renameTo(new File(newDir)))
+            {
+                System.out.println("the cup generated file has been moved successfully.");
+                fileMoved = true;
+            }
+            else
+            {
+                System.out.println("ERROR, the file could not be moved.");                
+            }
+        }
+        else
+        {
+            System.out.println("File could not be found!");
+        }
+        
+        return fileMoved;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpiar;
@@ -468,6 +555,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuAnalizarC;
     private javax.swing.JMenuItem jMenuArchivoC;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuCUP;
     private javax.swing.JMenuItem jMenuImportar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

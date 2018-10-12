@@ -1,6 +1,7 @@
 package minic_compis;
 import static minic_compis.Token.*;
 import java_cup.runtime.*;
+
 %%
 %class AnalizadorFlex
 
@@ -55,7 +56,6 @@ Menor = "<"
 Mayor = ">"
 Espacio = " "
 Division = "/"
-BarraInvertida = "\"
 Or = "|"
 MayorIgual = {Mayor}{Igual}
 MenorIgual = {Menor}{Igual}
@@ -65,7 +65,7 @@ Corchetes = "{}"
 Llaves = "[]"
 Parentesis = "()"
 
-Simbolos = ExclamacionAbierto | ExclamacionCerrado | Arroba | Sharp | Dollar | Porcentaje | Ampersan | ParentesisAbierto | ParentesisCerrado | Igual| QuestionAbierto| QuestionCerrado| Suma | Mult | CorcheteAbierto | CorcheteCerrado | LlaveAbierta | LlaveCerrada | Coma | PuntoComa | Punto | DosPuntos | GuionBajo | Resta | Menor | Mayor | Espacio | Division | BarraInvertida | Or | MayorIgual | MenorIgual | Igual2 | Distinto | Corchetes | Llaves | Parentesis
+Simbolos = ExclamacionAbierto | ExclamacionCerrado | Arroba | Sharp | Dollar | Porcentaje | Ampersan | ParentesisAbierto | ParentesisCerrado | Igual| QuestionAbierto| QuestionCerrado| Suma | Mult | CorcheteAbierto | CorcheteCerrado | LlaveAbierta | LlaveCerrada | Coma | PuntoComa | Punto | DosPuntos | GuionBajo | Resta | Menor | Mayor | Espacio | Division | Or | MayorIgual | MenorIgual | Igual2 | Distinto | Corchetes | Llaves | Parentesis
 
 Cadena = ({Letra} | {Digito}| {Simbolos})*
 
@@ -96,8 +96,9 @@ ComentarioExtendido = {Division}{Mult}(({Letra}|{Digito}|{white}|{Cadena})*){Mul
  /* Operadores */8
 Operador = Suma | Resta | Mult | Division | Division | Menor | MenorIgual| Mayor | MayorIgual | Igual | Igual2 | Distinto | {Ampersan}{Ampersan} | {Or}{Or} | ExclamacionCerrado | PuntoComa | Coma | Punto | LlaveAbierta | LlaveCerrada | ParentesisAbierto | ParentesisCerrado | LlaveAbierta | LlaveCerrada | {CorcheteAbierto}{CorcheteCerrado} | {ParentesisAbierto}{ParentesisCerrado} | {LlaveAbierta}{LlaveCerrada}
 
-/* Posibles Errores */
+/* Posibles Errores 
 CadenaIncompleta = {BarraInvertida}{Cadena}
+*/
 
 %{
     public String retornoToken;
@@ -136,7 +137,6 @@ CadenaIncompleta = {BarraInvertida}{Cadena}
 "<" {return symbol(sym.Menor, New String(yytext()));}
 ">" {return symbol(sym.Mayor, New String(yytext()));}
 " " {return symbol(sym.Espacio, New String(yytext()));}
-"\" {return symbol(sym.BarraInvertida, New String(yytext()));}
 "|" {return symbol(sym.Or, New String(yytext()));}
 "-" {return symbol(sym.Resta, New String(yytext()));}
 ">=" {return symbol(sym.MayorIgual, New String(yytext()));}
@@ -159,7 +159,7 @@ CadenaIncompleta = {BarraInvertida}{Cadena}
 {ConstString} {return symbol(sym.ConstString, New String(yytext()));}
 {Operador} {return symbol(sym.Operador, New String(yytext()));}
 {Identificador} {return symbol(sym.Identificador, New String(yytext()));}
-{CadenaIncompleta} {return symbol(sym.CadenaIncompleta, New String(yytext()));}
-.   {system.out.println("Error no registrado en analizador.")};
+/*{CadenaIncompleta} {return symbol(sym.CadenaIncompleta, New String(yytext()));} */
+.   {system.out.println("Error no registrado en analizador.");}
 
 }

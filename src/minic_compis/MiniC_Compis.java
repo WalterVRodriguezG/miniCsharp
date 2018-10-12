@@ -31,74 +31,7 @@ public class MiniC_Compis {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Hello World!! \n");
-        
-        java.util.Scanner in = new Scanner(System.in);
-        int valor = 0;
-        do {
-            System.out.println("Elija una opcion: ");
-            System.out.println("1) Generar");
-            System.out.println("2) Ejecutar");
-            System.out.println("3) Salir");
-            System.out.print("Opcion: ");
-            valor = in.nextInt();
-            switch (valor) {
-                /*  Generamos el analizador lexico y sintactico.
-                 lcalc.flex contiene la definicion del analizador lexico
-                 ycalc.cup contiene la definicion del analizador sintactico
-                 */
-                case GENERAR: {
-                    System.out.println("\n*** Generando ***\n");
-                    String archLexico = "";
-                    String archSintactico = "";
-                    if (args.length > 0) {
-                        System.out.println("\n*** Procesando archivos custom ***\n");
-                        archLexico = args[0];
-                        archSintactico = args[1];
-                    } else {
-                        System.out.println("\n*** Procesando archivo default ***\n");
-                        archLexico = "alexico.flex";
-                        archSintactico = "asintactico.cup";
-                    }
-                    String[] alexico = {archLexico};
-                    String[] asintactico = {"-parser", "AnalizadorSintactico", archSintactico};
-                    jflex.Main.main(alexico);
-                    try {
-                        java_cup.Main.main(asintactico);
-                    } catch (Exception ex) {
-                        Logger.getLogger(MiniC_Compis.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    //movemos los archivos generados
-                    boolean mvAL = moverArch("AnalizadorLexico.java");
-                    boolean mvAS = moverArch("AnalizadorSintactico.java");
-                    boolean mvSym= moverArch("sym.java");
-                    if(mvAL && mvAS && mvSym){
-                        System.exit(0);
-                    }
-                    System.out.println("Generado!");
-                    break;
-                }
-                case EJECUTAR: {
-                    /*  Ejecutamos el analizador lexico y sintactico
-                     sobre un archivo de pruebas. 
-                     */
-                    String[] archivoPrueba = {"test.txt"};
-                    AnalizadorSintactico.main(archivoPrueba);
-                    System.out.println("Ejecutado!");
-                    break;
-                }
-                case SALIR: {
-                    System.out.println("Adios!");
-                    break;
-                }
-                default: {
-                    System.out.println("Opcion no valida!");
-                    break;
-                }
-            }
-        } while (valor != 3);
-
-        
-        
+       
 //        String path = "C:/Users/Walter Rodriguez/Documents/NetBeansProjects/miniC_Compis/src/minic_compis/AnalizadorFlex.flex";
 //        
 //        createLexer(path);
@@ -106,31 +39,6 @@ public class MiniC_Compis {
 //Cargar archivo .flex
         
         
-    }
-    
-    
-    public static boolean moverArch(String archNombre) {
-        boolean efectuado = false;
-        File arch = new File(archNombre);
-        if (arch.exists()) {
-            System.out.println("\n*** Moviendo " + arch + " \n***");
-            Path currentRelativePath = Paths.get("");
-            String nuevoDir = currentRelativePath.toAbsolutePath().toString()
-                    + File.separator + "src" + File.separator
-                    + "ejemplocup" + File.separator + arch.getName();
-            File archViejo = new File(nuevoDir);
-            archViejo.delete();
-            if (arch.renameTo(new File(nuevoDir))) {
-                System.out.println("\n*** Generado " + archNombre + "***\n");
-                efectuado = true;
-            } else {
-                System.out.println("\n*** No movido " + archNombre + " ***\n");
-            }
-
-        } else {
-            System.out.println("\n*** Codigo no existente ***\n");
-        }
-        return efectuado;
     }
     
     
