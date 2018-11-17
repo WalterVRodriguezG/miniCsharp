@@ -4,7 +4,6 @@ import java_cup.runtime.*;
 
 %%
 %class AnalizadorFlex
-
 %column
 %line
 %cup
@@ -20,61 +19,20 @@ import java_cup.runtime.*;
 %}
 
 
-Letra = [a-zA-ZÑñ]
-Digito = [0-9]
-NumeroEntero = {Digito}{Digito}*
-Palabra = {Letra}{Letra}*
+%{
+    public String retornoToken;
+    public int fila;
+    public int columna;
+    public int tamanio;
+%}
 
-/* Cadena = ({Letra} | {Digito}| " " | "!" | "@" | "#" | "$" | "%" | "&" | "(" | ")" | "=" | "?" | "¿" | "¡" | "*" | "+" | "[" | "]" | "," | ";" | "." | ":" | "-" | "_" | "<" | ">" | "°" | "¬" | [\|])* */
-
-/*  Signos  */
-ExclamacionAbierto = "¡"
-ExclamacionCerrado = "!"
-Arroba = "@"
-Sharp = "#"
-Dollar = "$"
-Porcentaje = "%"
-Ampersan = "&"
-ParentesisAbierto = "("
-ParentesisCerrado = ")"
-Igual = "="
-QuestionAbierto = "¿"
-QuestionCerrado = "?"
-Suma = "+"
-Mult = "*"
-CorcheteAbierto = "["
-CorcheteCerrado = "]"
-LlaveAbierta = "{"
-LlaveCerrada = "}"
-Coma = ","
-PuntoComa = ";"
-Punto = "."
-DosPuntos = ":"
-GuionBajo = "_"
-Resta = "-"
-Menor = "<"
-Mayor = ">"
-Espacio = " "
-Division = "/"
-Or = "|"
-MayorIgual = {Mayor}{Igual}
-MenorIgual = {Menor}{Igual}
-Igual2 = {IgualIgual}
-Distinto = {ExclamacionCerrado}{Igual}
-Corchetes = "{}"
-Llaves = "[]"
-Parentesis = "()"
-
-Simbolos = ExclamacionAbierto | ExclamacionCerrado | Arroba | Sharp | Dollar | Porcentaje | Ampersan | ParentesisAbierto | ParentesisCerrado | Igual| QuestionAbierto| QuestionCerrado| Suma | Mult | CorcheteAbierto | CorcheteCerrado | LlaveAbierta | LlaveCerrada | Coma | PuntoComa | Punto | DosPuntos | GuionBajo | Resta | Menor | Mayor | Espacio | Division | Or | MayorIgual | MenorIgual | Igual2 | Distinto | Corchetes | Llaves | Parentesis
-
-Cadena = ({Letra} | {Digito}| {Simbolos})*
 
 /* Estructura Lexicográfica */
 
 /* Espacios en blanco */
 white = [ \n\t\r\f]+
 
-/* Palabras reservadas */
+
 P_Reservada = void | int | double | bool | string | class | interface | null | this  | extends | implements | for | while | if | else | return | break | New | NewArray | Print | ReadInteger | ReadLine | Malloc | interface
 
 /* Constantes */
@@ -100,15 +58,14 @@ Operador = Suma | Resta | Mult | Division | Division | Menor | MenorIgual| Mayor
 CadenaIncompleta = {BarraInvertida}{Cadena}
 */
 
-%{
-    public String retornoToken;
-    public int fila;
-    public int columna;
-    public int tamanio;
-%}
+
 %%
 
 <YYINITIAL>{
+
+{white} {/* Ignore */}
+
+/*      Simbolos        */
 
 "¡" {return symbol(sym.ExclamacionAbierto, New String(yytext()));}
 "!" {return symbol(sym.ExclamacionCerrado, New String(yytext()));}
@@ -136,18 +93,22 @@ CadenaIncompleta = {BarraInvertida}{Cadena}
 "-" {return symbol(sym.Resta, New String(yytext()));}
 "<" {return symbol(sym.Menor, New String(yytext()));}
 ">" {return symbol(sym.Mayor, New String(yytext()));}
-" " {return symbol(sym.Espacio, New String(yytext()));}
-"|" {return symbol(sym.Or, New String(yytext()));}
+
+
+/*      Operadores      */
+"||" {return symbol(sym.Or, New String(yytext()));}
 "-" {return symbol(sym.Resta, New String(yytext()));}
 ">=" {return symbol(sym.MayorIgual, New String(yytext()));}
 "<=" {return symbol(sym.MenorIgual, New String(yytext()));}
 "==" {return symbol(sym.Igual2, New String(yytext()));}
 "!=" {return symbol(sym.Distinto, New String(yytext()));}
 "[]" {return symbol(sym.Corchetes, New String(yytext()));}
-"{}" {return symbol(sym.Llaves, New String(yytext()));}
-"()" {return symbol(sym.Parentesis, New String(yytext()));}
+//"{}" {return symbol(sym.Llaves, New String(yytext()));}
+//"()" {return symbol(sym.Parentesis, New String(yytext()));}
 
-{white} {/* Ignore */}
+
+
+/* Palabras reservadas */
 {P_Reservada} {return symbol(sym.P_Reservada, New String(yytext()));}
 
 {ComentarioLineal} {return symbol(sym.ComentarioLineal, New String(yytext()));}
