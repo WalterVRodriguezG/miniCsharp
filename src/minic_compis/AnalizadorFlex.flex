@@ -93,6 +93,7 @@ BOOLEAN = true | false
     "/" {return symbol(sym.DIVISION , yytext());}
     "-" {return symbol(sym.RESTA, yytext());}
     "%" {return symbol(sym.MOD, yytext());}
+    "=" {return symbol(sym.IGUAL, yytext());}
     "<" {return symbol(sym.MENOR, yytext());}
     ">" {return symbol(sym.MAYOR, yytext());}
     "||" {return symbol(sym.OR,yytext());}

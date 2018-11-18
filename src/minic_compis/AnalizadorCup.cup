@@ -1,5 +1,6 @@
-package minic;
+package minic_compis;
 import java_cup.runtime.*;
+import java.io.FileReader;
 
 parser code {:
 /* ------------ Manejo de Errores ---------- */    
@@ -28,9 +29,9 @@ parser code {:
     
     public static void main(String[] args){
         try {
-            AnalizadorSintactico asin = new AnalizadorSintactico(
+            AnalizadorSintactico sintactico = new AnalizadorSintactico(
                     new AnalizadorLexico( new FileReader(args[0])));
-            Object result = asin.parse().value;
+            Object result = sintactico.parse().value;
             System.out.println("\n*** Resultados finales ***");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -41,17 +42,17 @@ parser code {:
     /* ------------Declaracion de simbolos terminales y no terminales---------- */
 
             /*--------------TERMINALES-----------*/
-terminal void, int, double, bool, string, class, interface, null, this, extends, implements, for, while, if, else, return, break, New, NewArray, Print, ReadInteger, ReadLine, Malloc, Identificador, GETBYTE, SETBYTE, ExclamacionAbierto, ExclamacionCerrado, Arroba, Sharp, Dollar, Porcentaje, Ampersan, ParentesisAbierto, ParentesisCerrado, Suma, Igual, QuestionAbierto, QuestionCerrado, Mult, CorcheteAbierto, CorcheteCerrado, LlaveAbierta, LlaveCerrada, Coma, PuntoComa, Punto, DosPuntos, GuionBajo, Resta, Menor, Mayor, Espacio, Division, BarraInvertida, Or, MayorIgual, MenorIgual, Igual2, Distinto, Corchetes, Llaves, Parentesis;
-terminal Object intConstant, doubleConstant, boolConstant, stringConstant, hexConstant;
+terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS, IMPLEMENTS, FOR, WHILE, IF, ELSE, RETURN, BREAK, NEW, NEWARRAY, PRINT, READINTEGER, READLINE, MALLOC,  GETBYTE, SETBYTE, IDENTIFICADOR, SUMA, RESTA, MULT, DIVISION, MOD, IGUAL, MENOR, MAYOR, OR, MAYORIGUAL, MENORIGUAL, DOBLEIGUAL, DISTINTO, CORCHETES, LLAVES, PARENTESIS, EXCLAOPEN, EXCLACLOSE, ARROBA, SHARP, DOLLAR, AMPERSAN, POPEN, PCLOSE, QUESTIONOPEN, QUESTIONCLOSE, CORCHETEOPEN, CORCHETECLOSE, LLAVEOPEN, LLAVECLOSE, COMA, PUNTOYCOMA, PUNTO, DOSPUNTOS, GUIONBAJO;
+terminal Object intConstant, doubleConstant, boolConstant, CADENA, hexConstant;
 
             /*--------------NO TERMINALES-----------*/
-non terminal  Start, Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtVar, StmtStmt, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont;
+non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont;
 
             /*--------------PRECEDENCIAS-----------*/
-precedence left Suma, Resta, Mult, Division, Porcentaje;
-precedence left Menor, MenorIgual, Mayor, MayorIgual, Igual, Igual2, Ampersan, Or, ExclamacionCerrado ;
-precedence left else;
-precedence left Identificador;
+precedence left SUMA, RESTA, MULT, DIVISION, MOD;
+precedence left IGUAL, MENOR, MAYOR, OR, MAYORIGUAL, MENORIGUAL, DOBLEIGUAL, DISTINTO, EXCLACLOSE ;
+precedence left ELSE;
+precedence left IDENTIFICADOR;
 
             /* -------------------GRAMATICA MINI C#------------------------ */
 
@@ -65,36 +66,36 @@ Decl ::= VariableDecl
 | ClassDecl
 | InterfaceDecl ;
 
-VariableDecl ::= Variable PuntoComa ;
+VariableDecl ::= Variable PUNTOYCOMA ;
 
-Variable ::= Type Identificador ;
+Variable ::= Type IDENTIFICADOR ;
 
-Type ::= int
-| double
-| bool
-| string
-| Identificador
-| Type Corchetes ;
+Type ::= INT
+| DOUBLE
+| BOOL
+| CADENA
+| IDENTIFICADOR
+| Type CORCHETES ;
 
 FunctionDecl ::= Type FuncCont
-| void FuncCont ;
+| VOID FuncCont ;
 
-FuncCont ::= Identificador ParentesisAbierto Formals ParentesisCerrado StmtBlock;
+FuncCont ::= IDENTIFICADOR POPEN Formals PCLOSE StmtBlock;
 
-Formals ::= Formals Coma Variable
+Formals ::= Formals COMA Variable
 | Variable
 | /* ε */ ;
 
-ClassDecl ::= class Identificador Ext Imp LlaveAbierta ClassField LlaveCerrada ;
+ClassDecl ::= CLASS IDENTIFICADOR Ext Imp LLAVEOPEN ClassField LLAVECLOSE ;
 
-Ext ::= extends Identificador
+Ext ::= EXTENDS IDENTIFICADOR
 | /* ε */ ;
 
-Imp ::= implements ImpID
+Imp ::= IMPLEMENTS ImpID
 | /* ε */ ;
 
-ImpID ::= ImpID Coma Identificador
-| Identificador ;
+ImpID ::= ImpID COMA IDENTIFICADOR
+| IDENTIFICADOR ;
 
 ClassField ::= ClassField Field
 | /* ε */ ;
@@ -102,17 +103,17 @@ ClassField ::= ClassField Field
 Field ::= Field VariableDecl
 | Field FunctionDecl ;
 
-InterfaceDecl ::= interface Identificador LlaveAbierta InterfaceProt LlaveCerrada ;
+InterfaceDecl ::= INTERFACE IDENTIFICADOR LLAVEOPEN InterfaceProt LLAVECLOSE ;
 
 InterfaceProt ::= InterfaceProt Prototype
 | /* ε */ ;
 
 Prototype ::= Type ProtCont
-| void ProtCont;
+| VOID ProtCont;
 
-ProtCont ::= Identificador ParentesisAbierto Formals ParentesisCerrado PuntoComa ;
+ProtCont ::= IDENTIFICADOR POPEN Formals PCLOSE PUNTOYCOMA ;
 
-StmtBlock ::= LlaveAbierta StmtVar StmtStmt LlaveCerrada ;
+StmtBlock ::= LLAVEOPEN StmtVar StmtStmt LLAVECLOSE ;
 
 StmtVar ::= StmtVar VariableDecl
 | /* ε */ ;
@@ -120,7 +121,7 @@ StmtVar ::= StmtVar VariableDecl
 StmtStmt ::= StmtStmt Stmt
 | /* ε */ ;
 
-Stmt ::= StmtExpr PuntoComa
+Stmt ::= StmtExpr PUNTOYCOMA
 | IfStmt
 | WhileStmt
 | ForStmt
@@ -132,63 +133,63 @@ Stmt ::= StmtExpr PuntoComa
 StmtExpr ::= Expr
 | /* ε */ ;
 
-IfStmt ::= if ParentesisAbierto Expr ParentesisCerrado Stmt ElseIfStmt ;
+IfStmt ::= IF POPEN Expr PCLOSE Stmt ElseIfStmt ;
 
-ElseIfStmt ::= else Stmt
+ElseIfStmt ::= ELSE Stmt
 | /* ε */ ;
 
-WhileStmt ::= while ParentesisAbierto Expr ParentesisCerrado Stmt ;
+WhileStmt ::= WHILE POPEN Expr PCLOSE Stmt ;
 
-ForStmt ::= for ParentesisAbierto StmtExpr PuntoComa Expr PuntoComa StmtExpr ParentesisCerrado Stmt ;
+ForStmt ::= FOR POPEN StmtExpr PUNTOYCOMA Expr PUNTOYCOMA StmtExpr PCLOSE Stmt ;
 
-ReturnStmt ::= return StmtExpr PuntoComa ;
+ReturnStmt ::= RETURN StmtExpr PUNTOYCOMA ;
 
-BreakStmt ::= break PuntoComa ;
+BreakStmt ::= BREAK PUNTOYCOMA ;
 
-PrintStmt ::= Print ParentesisAbierto ExprPrint ParentesisCerrado PuntoComa ;
+PrintStmt ::= PRINT POPEN ExprPrint PCLOSE PUNTOYCOMA ;
 
-ExprPrint ::= ExprPrint Coma Expr
+ExprPrint ::= ExprPrint COMA Expr
 | Expr ;
 
-Expr ::= LValue Igual Expr
+Expr ::= LValue IGUAL Expr
 | Constant
 | LValue
-| this
+| THIS
 | Call 
-| ParentesisAbierto Expr ParentesisCerrado 
-| Expr Suma Expr
-| Expr Resta Expr
-| Expr Mult Expr
-| Expr Division Expr
-| Expr Porcentaje Expr
-| Resta Expr
-| Expr Menor Expr
-| Expr MenorIgual Expr
-| Expr Mayor Expr
-| Expr MayorIgual Expr
-| Expr Igual2 Expr
-| Expr Distinto Expr
-| Expr Ampersan Ampersan Expr
-| Expr Or Or Expr
-| ExclamacionCerrado Expr
-| New ParentesisAbierto Identificador ParentesisCerrado
-| NewArray ParentesisAbierto Expr Coma Type ParentesisCerrado
-| ReadInteger Parentesis
-| ReadLine Parentesis
-| Malloc ParentesisAbierto Expr ParentesisCerrado ;
+| POPEN Expr PCLOSE
+| Expr SUMA Expr
+| Expr RESTA Expr
+| Expr MULT Expr
+| Expr DIVISION Expr
+| Expr MOD Expr
+| RESTA Expr
+| Expr MENOR Expr
+| Expr MENORIGUAL Expr
+| Expr MAYOR Expr
+| Expr MAYORIGUAL Expr
+| Expr DOBLEIGUAL Expr
+| Expr DISTINTO Expr
+| Expr AMPERSAN AMPERSAN Expr
+| Expr OR OR Expr
+| EXCLACLOSE Expr
+| NEW POPEN IDENTIFICADOR PCLOSE
+| NEWARRAY POPEN Expr COMA Type PCLOSE
+| ReadInteger PARENTESIS
+| ReadLine PARENTESIS
+| MALLOC POPEN Expr PCLOSE ;
 
-LValue ::= Identificador
-| Expr Punto Identificador 
-| Expr CorcheteAbierto Expr CorcheteCerrado ;
+LValue ::= IDENTIFICADOR
+| Expr PUNTO IDENTIFICADOR
+| Expr CORCHETEOPEN Expr CORCHETECLOSE ;
 
-Call ::= Identificador ParentesisAbierto Actuals ParentesisCerrado 
-| Expr Punto Identificador CallCont
-| Expr Punto LibCall CallCont ;
+Call ::= IDENTIFICADOR POPEN Actuals PCLOSE 
+| Expr PUNTO IDENTIFICADOR CallCont
+| Expr PUNTO LibCall CallCont ;
 
-CallCont ::= ParentesisAbierto Actuals ParentesisCerrado ;
+CallCont ::= POPEN Actuals PCLOSE ;
 
-LibCall ::= GETBYTE ParentesisAbierto Expr ParentesisCerrado
-| SETBYTE ParentesisAbierto Expr Coma Expr ParentesisCerrado ;
+LibCall ::= GETBYTE POPEN Expr PCLOSE
+| SETBYTE POPEN Expr COMA Expr PCLOSE ;
 
 Actuals ::= ExprPrint
 | /* ε */ ;
@@ -196,5 +197,5 @@ Actuals ::= ExprPrint
 Constant ::= intConstant
 | doubleConstant
 | boolConstant
-| stringConstant
+| CADENA
 | null ;

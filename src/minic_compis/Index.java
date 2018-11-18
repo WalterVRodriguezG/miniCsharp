@@ -325,7 +325,7 @@ public class Index extends javax.swing.JFrame {
         }
     }
     
-    //Método para Generar Archivo compilado de Jflex
+    //Método para Generar Archivo compilado de Jflex --> REPARAR CREAR CUP
     public static void createLexer(String ruta){
         File archivo = new File(ruta);
         jflex.Main.generate(archivo);
