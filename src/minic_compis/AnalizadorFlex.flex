@@ -31,6 +31,7 @@ import java_cup.runtime.*;
 
 /* Espacios en blanco */
 white = [ \n\t\r\f]+
+BOOLEAN = true | false
 
 /* Constantes 
         ConstBooleana =  false | true
@@ -148,10 +149,10 @@ white = [ \n\t\r\f]+
 /*      Comentario       */ 
 "/*" [^*] ~ "*/"  {/*Ignore*/}  /* MULTILINEA */
 "//" [^\r\n]+  {/*Ignore*/}   /*    UNA LINEA */
-"/*" [^*]+ {System.out.print(" *** ERROR LINEA " + (yyline +1) + " ***" + "   " + "Comentario Incompleto - Falta cierre de comentario multilinea " + "\n"); }  /*   INCOMPLETO  */
+"/*" [^*]+ {System.out.print(" Error en Fila " + (yyline +1) + "   " + "Comentario Incompleto, no finalizado" + "\n"); }  /*   INCOMPLETO  */
 
 /*   Booleanos  */
-{BOOLEANAS} {return symbol(sym.boolConstant, yytext()); }
+{BOOLEAN} {return symbol(sym.boolConstant, yytext()); }
 
 
     /*      Valores Numéricos    */
@@ -160,6 +161,6 @@ white = [ \n\t\r\f]+
 [0-9]+ "." ([0-9]+ | [0-9]+(E | e) ("+")? [0-9]+ | (E | e) ("+")? [0-9]+ )? {return symbol(sym.doubleConstant, yytext()); }
     /*      Hexadecimales        */
 (0x | 0X )[0-9|A-F|a-f]+ {return symbol(sym.hexConstant, yytext()); }
-.   {system.out.println("Error no registrado en analizador.");}
+.   {System.out.println("   ¡¡Error!!     ");}
 
 }
