@@ -46,7 +46,7 @@ terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS,
 terminal Object intConstant, doubleConstant, boolConstant, CADENA, hexConstant;
 
             /*--------------NO TERMINALES-----------*/
-non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont, StmtVar, Start, StmtStmt;
+non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont, StmtVar, Start, StmtStmt, FormalsB;
 
             /*--------------PRECEDENCIAS-----------*/
 precedence left SUMA, RESTA, MULT, DIVISION, MOD;
@@ -86,8 +86,9 @@ FunctionDecl ::= Type FuncCont
 
 FuncCont ::= IDENTIFICADOR POPEN Formals PCLOSE StmtBlock;
 
-Formals ::= Formals COMA Variable
-| Variable
+Formals ::= Variable FormalsB;
+
+FormalsB ::= COMA Variable FormalsB
 | /* ε */ ;
 
 ClassDecl ::= CLASS IDENTIFICADOR Ext Imp LLAVEOPEN ClassField LLAVECLOSE ;
