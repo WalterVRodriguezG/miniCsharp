@@ -59,7 +59,7 @@ BOOLEAN = true | false
 
 %%
 
-<YYINITIAL>{
+/*  <YYINITIAL>{    */
 
 {white} {/* Ignore */}
 
@@ -81,7 +81,7 @@ BOOLEAN = true | false
     "}" {return symbol(sym.LLAVECLOSE, yytext());}
     "," {return symbol(sym.COMA, yytext());}
     ";" {return symbol(sym.PUNTOYCOMA, yytext());}
-    "." {return symbol(sym.PUNTO, yytext()));}
+    "." {return symbol(sym.PUNTO, yytext());}
     ":" {return symbol(sym.DOSPUNTOS, yytext());}
     "_" {return symbol(sym.GUIONBAJO, yytext());}
     
@@ -164,4 +164,4 @@ BOOLEAN = true | false
 (0x | 0X )[0-9|A-F|a-f]+ {return symbol(sym.hexConstant, yytext()); }
 .   {System.out.println("   ¡¡Error!!     ");}
 
-}
+/*  }   */

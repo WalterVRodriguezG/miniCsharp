@@ -29,8 +29,8 @@ parser code {:
     
     public static void main(String[] args){
         try {
-            AnalizadorSintactico sintactico = new AnalizadorSintactico(
-                    new AnalizadorLexico( new FileReader(args[0])));
+            Sintaxis sintactico = new Sintaxis(
+                    new AnalizadorFlex( new FileReader(args[0])));
             Object result = sintactico.parse().value;
             System.out.println("\n*** Resultados finales ***");
         } catch (Exception ex) {
@@ -46,13 +46,17 @@ terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS,
 terminal Object intConstant, doubleConstant, boolConstant, CADENA, hexConstant;
 
             /*--------------NO TERMINALES-----------*/
-non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont;
+non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont, StmtVar, Start, StmtStmt;
 
             /*--------------PRECEDENCIAS-----------*/
 precedence left SUMA, RESTA, MULT, DIVISION, MOD;
-precedence left IGUAL, MENOR, MAYOR, OR, MAYORIGUAL, MENORIGUAL, DOBLEIGUAL, DISTINTO, EXCLACLOSE ;
+precedence left Expr;
+precedence left IGUAL, MENOR, MAYOR, OR, MAYORIGUAL, MENORIGUAL, DOBLEIGUAL, DISTINTO, EXCLACLOSE, AMPERSAN, CORCHETEOPEN, PUNTO ;
 precedence left ELSE;
 precedence left IDENTIFICADOR;
+precedence left CADENA;
+
+
 
             /* -------------------GRAMATICA MINI C#------------------------ */
 
@@ -174,8 +178,8 @@ Expr ::= LValue IGUAL Expr
 | EXCLACLOSE Expr
 | NEW POPEN IDENTIFICADOR PCLOSE
 | NEWARRAY POPEN Expr COMA Type PCLOSE
-| ReadInteger PARENTESIS
-| ReadLine PARENTESIS
+| READINTEGER PARENTESIS
+| READLINE PARENTESIS
 | MALLOC POPEN Expr PCLOSE ;
 
 LValue ::= IDENTIFICADOR
@@ -198,4 +202,4 @@ Constant ::= intConstant
 | doubleConstant
 | boolConstant
 | CADENA
-| null ;
+| NULL ;
