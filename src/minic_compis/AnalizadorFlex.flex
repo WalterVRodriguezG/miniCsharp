@@ -1,14 +1,23 @@
 package minic_compis;
 import static minic_compis.Token.*;
 import java_cup.runtime.*;
+import java.io.*;
 
 %%
+%public
 %class AnalizadorFlex
 %column
 %line
 %cup
+%type Symbol
+%unicode
 
 %{
+    public String retornoToken;
+    public int fila;
+    public int columna;
+    public int tamanio;
+
     private Symbol symbol(int type){
         return new Symbol(type, yyline, yycolumn);
     }
@@ -18,20 +27,11 @@ import java_cup.runtime.*;
     }
 %}
 
-
-%{
-    public String retornoToken;
-    public int fila;
-    public int columna;
-    public int tamanio;
-%}
-
-
 /* Estructura Lexicográfica */
 
 /* Espacios en blanco */
 white = [ \n\t\r\f]+
-BOOLEAN = true | false
+/* BOOLEAN = true | false */
 
 /* Constantes 
         ConstBooleana =  false | true
@@ -63,6 +63,24 @@ BOOLEAN = true | false
 
 {white} {/* Ignore */}
 
+/*      Operadores      */
+    "+" {return symbol(sym.SUMA, yytext());}
+    "*" {return symbol(sym.MULT, yytext());}
+    "/" {return symbol(sym.DIVISION , yytext());}
+    "-" {return symbol(sym.RESTA, yytext());}
+    "%" {return symbol(sym.MOD, yytext());}
+    "=" {return symbol(sym.IGUAL, yytext());}
+    "<" {return symbol(sym.MENOR, yytext());}
+    ">" {return symbol(sym.MAYOR, yytext());}
+    "||" {return symbol(sym.OR,yytext());}
+    ">=" {return symbol(sym.MAYORIGUAL, yytext());}
+    "<=" {return symbol(sym.MENORIGUAL, yytext());}
+    "==" {return symbol(sym.DOBLEIGUAL,yytext());}
+    "!=" {return symbol(sym.DISTINTO, yytext());}
+    "[]" {return symbol(sym.CORCHETES, yytext());}
+    //"{}" {return symbol(sym.LLAVES, yytext());}
+    //"()" {return symbol(sym.PARENTESIS, yytext());}
+
 /*      Simbolos        */
 
     "¡" { return symbol(sym.EXCLAOPEN, yytext()); }
@@ -85,25 +103,6 @@ BOOLEAN = true | false
     ":" {return symbol(sym.DOSPUNTOS, yytext());}
     "_" {return symbol(sym.GUIONBAJO, yytext());}
     
-
-
-/*      Operadores      */
-    "+" {return symbol(sym.SUMA, yytext());}
-    "*" {return symbol(sym.MULT, yytext());}
-    "/" {return symbol(sym.DIVISION , yytext());}
-    "-" {return symbol(sym.RESTA, yytext());}
-    "%" {return symbol(sym.MOD, yytext());}
-    "=" {return symbol(sym.IGUAL, yytext());}
-    "<" {return symbol(sym.MENOR, yytext());}
-    ">" {return symbol(sym.MAYOR, yytext());}
-    "||" {return symbol(sym.OR,yytext());}
-    ">=" {return symbol(sym.MAYORIGUAL, yytext());}
-    "<=" {return symbol(sym.MENORIGUAL, yytext());}
-    "==" {return symbol(sym.DOBLEIGUAL,yytext());}
-    "!=" {return symbol(sym.DISTINTO, yytext());}
-    "[]" {return symbol(sym.CORCHETES, yytext());}
-    //"{}" {return symbol(sym.LLAVES, yytext());}
-    //"()" {return symbol(sym.PARENTESIS, yytext());}
 
 
 
@@ -152,9 +151,9 @@ BOOLEAN = true | false
 "//" [^\r\n]+  {/*Ignore*/}   /*    UNA LINEA */
 "/*" [^*]+ {System.out.print(" Error en Fila " + (yyline +1) + "   " + "Comentario Incompleto, no finalizado" + "\n"); }  /*   INCOMPLETO  */
 
-/*   Booleanos  */
+/*   Booleanos  
 {BOOLEAN} {return symbol(sym.boolConstant, yytext()); }
-
+*/
 
     /*      Valores Numéricos    */
 [0-9]+ {return symbol(sym.intConstant, new Integer(yytext())); }

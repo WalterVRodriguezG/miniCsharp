@@ -10,6 +10,7 @@ parser code {:
         StringBuilder m = new StringBuilder("Error");
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+            m.append(" de sintaxis... Simbolo: " + s.value.toString()+ " no reconocido.");
             if (s.left >= 0) {                
                 m.append(" in line "+(s.left+1));
                 if (s.right >= 0)
@@ -32,7 +33,7 @@ parser code {:
             Sintaxis sintactico = new Sintaxis(
                     new AnalizadorFlex( new FileReader(args[0])));
             Object result = sintactico.parse().value;
-            System.out.println("\n*** Resultados finales ***");
+            System.out.println("\n  --- Generación con CUP ---");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -46,11 +47,11 @@ terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS,
 terminal Object intConstant, doubleConstant, boolConstant, CADENA, hexConstant;
 
             /*--------------NO TERMINALES-----------*/
-non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont, StmtVar, Start, StmtStmt, FormalsB;
+non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont, StmtVar, Start, StmtStmt, FormalsB, StmtContent, StmtBlockVariableDecl;
 
             /*--------------PRECEDENCIAS-----------*/
 precedence left SUMA, RESTA, MULT, DIVISION, MOD;
-precedence left Expr;
+//precedence left Expr;
 precedence left IGUAL, MENOR, MAYOR, OR, MAYORIGUAL, MENORIGUAL, DOBLEIGUAL, DISTINTO, EXCLACLOSE, AMPERSAN, CORCHETEOPEN, PUNTO ;
 precedence left ELSE;
 precedence left IDENTIFICADOR;
@@ -63,12 +64,14 @@ precedence left CADENA;
 Start ::= Program ;
 
 Program ::= Program Decl
-| Decl ;
+|  /* ε */ ;
 
 Decl ::= VariableDecl
 | FunctionDecl
 | ClassDecl
-| InterfaceDecl ;
+| InterfaceDecl 
+| error PUNTOYCOMA
+| error LLAVECLOSE;
 
 VariableDecl ::= Variable PUNTOYCOMA ;
 
@@ -86,9 +89,10 @@ FunctionDecl ::= Type FuncCont
 
 FuncCont ::= IDENTIFICADOR POPEN Formals PCLOSE StmtBlock;
 
-Formals ::= Variable FormalsB;
+Formals ::= FormalsB Variable
+|  /* ε */ ;
 
-FormalsB ::= COMA Variable FormalsB
+FormalsB ::= FormalsB Variable COMA 
 | /* ε */ ;
 
 ClassDecl ::= CLASS IDENTIFICADOR Ext Imp LLAVEOPEN ClassField LLAVECLOSE ;
@@ -105,8 +109,8 @@ ImpID ::= ImpID COMA IDENTIFICADOR
 ClassField ::= ClassField Field
 | /* ε */ ;
 
-Field ::= Field VariableDecl
-| Field FunctionDecl ;
+Field ::= VariableDecl
+|  FunctionDecl ;
 
 InterfaceDecl ::= INTERFACE IDENTIFICADOR LLAVEOPEN InterfaceProt LLAVECLOSE ;
 
@@ -118,13 +122,13 @@ Prototype ::= Type ProtCont
 
 ProtCont ::= IDENTIFICADOR POPEN Formals PCLOSE PUNTOYCOMA ;
 
-StmtBlock ::= LLAVEOPEN StmtVar StmtStmt LLAVECLOSE ;
+StmtBlock ::= LLAVEOPEN StmtContent LLAVECLOSE ;
 
-StmtVar ::= StmtVar VariableDecl
+StmtContent ::= StmtBlockVariableDecl StmtContent
 | /* ε */ ;
 
-StmtStmt ::= StmtStmt Stmt
-| /* ε */ ;
+StmtBlockVariableDecl ::= VariableDecl 
+| Stmt ;
 
 Stmt ::= StmtExpr PUNTOYCOMA
 | IfStmt

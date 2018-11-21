@@ -46,12 +46,12 @@ public class MiniC_Compis {
     
     
     public static void GenerarLexico(){
-        String [] rutaLex = {"/home/labhw02/NetBeansProjects/miniCsharp/src/minic_compis/AnalizadorFlex.flex"};
+        String [] rutaLex = {"C:/Users/Walter Rodriguez/Documents/GitHub/Compis/miniCsharp/src/minic_compis/AnalizadorFlex.flex"};
         jflex.Main.main(rutaLex);
     }
     
     public static void GenerarSintactico() throws IOException, Exception{
-        String rutaSintac = "/home/labhw02/NetBeansProjects/miniCsharp/src/minic_compis/AnalizadorCup.cup";
+        String rutaSintac = "C:/Users/Walter Rodriguez/Documents/GitHub/Compis/miniCsharp/src/minic_compis/AnalizadorCup.cup";
         String [] Sintactico = {"-parser","Sintaxis",rutaSintac};
         java_cup.Main.main(Sintactico);
         moverArchivo("Sintaxis.java");
