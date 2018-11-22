@@ -40,8 +40,7 @@ public class MiniC_Compis {
 //Cargar archivo .flex
         GenerarLexico();
         GenerarSintactico();
-        
-        
+  
     }
     
     
@@ -78,7 +77,7 @@ public class MiniC_Compis {
             
         } else {
             System.out.println(" Archivo no encontrado. \n");
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             
         }
         

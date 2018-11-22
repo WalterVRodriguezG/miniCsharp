@@ -5,7 +5,7 @@ import java.io.FileReader;
 parser code {:
 /* ------------ Manejo de Errores ---------- */    
 
-    //Mostrar Errores:
+    /* Mostrar Errores: */
     public void report_error(String message, Object info) {
         StringBuilder m = new StringBuilder("Error");
         if (info instanceof java_cup.runtime.Symbol) {
@@ -17,11 +17,11 @@ parser code {:
                     m.append(", column "+(s.right+1));
             }
         }
-        m.append(" : "+message);
+        /* m.append(" : "+message); */
         System.err.println(m);
     }
    
-    // RIP
+    /* RIP */
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
         System.exit(1);
@@ -42,77 +42,105 @@ parser code {:
 
     /* ------------Declaracion de simbolos terminales y no terminales---------- */
 
-            /*--------------TERMINALES-----------*/
-terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS, IMPLEMENTS, FOR, WHILE, IF, ELSE, RETURN, BREAK, NEW, NEWARRAY, PRINT, READINTEGER, READLINE, MALLOC,  GETBYTE, SETBYTE, IDENTIFICADOR, SUMA, RESTA, MULT, DIVISION, MOD, IGUAL, MENOR, MAYOR, OR, MAYORIGUAL, MENORIGUAL, DOBLEIGUAL, DISTINTO, CORCHETES, LLAVES, PARENTESIS, EXCLAOPEN, EXCLACLOSE, ARROBA, SHARP, DOLLAR, AMPERSAN, POPEN, PCLOSE, QUESTIONOPEN, QUESTIONCLOSE, CORCHETEOPEN, CORCHETECLOSE, LLAVEOPEN, LLAVECLOSE, COMA, PUNTOYCOMA, PUNTO, DOSPUNTOS, GUIONBAJO;
-terminal Object intConstant, doubleConstant, boolConstant, CADENA, hexConstant;
+/* ------------Declaracion de simbolos terminales y no terminales---------- *
 
-            /*--------------NO TERMINALES-----------*/
-non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont, StmtVar, Start, StmtStmt, FormalsB, StmtContent, StmtBlockVariableDecl;
+/*--------------TERMINALES-----------*/
+terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS, IMPLEMENTS, FOR, WHILE, IF, ELSE, RETURN, BREAK, NEW, NEWARRAY, PRINT, READINTEGER, READLINE, MALLOC, IDENT, GETBYTE, SETBYTE, PLUS, MINUS, TIMES, DIV, MOD, LESS, LESSEQ, GREATER, GREATEREQ, EQUALS, EQTO, NOTEQ, AMPERSONS, OR, EXCLAM, SEMI, COMMA, PERIOD, LCOR, RCOR, LPAR, RPAR, LLLAV, RLLAV, CORS, PARS, LLAVS, CONSTANT;
+terminal Object intConstant, doubleConstant, boolConstant, stringConstant, hexConstant;
 
-            /*--------------PRECEDENCIAS-----------*/
-precedence left SUMA, RESTA, MULT, DIVISION, MOD;
-//precedence left Expr;
-precedence left IGUAL, MENOR, MAYOR, OR, MAYORIGUAL, MENORIGUAL, DOBLEIGUAL, DISTINTO, EXCLACLOSE, AMPERSAN, CORCHETEOPEN, PUNTO ;
+/*--------------NO TERMINALES-----------*/
+non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr,Expr1, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont;
+
+/*--------------PRECEDENCIAS-----------*/
+precedence left EQUALS;
+precedence left PLUS, MINUS, TIMES, DIV, MOD;
+precedence left LESS, LESSEQ, GREATER, GREATEREQ, EQTO, NOTEQ, AMPERSONS, OR, EXCLAM ;
 precedence left ELSE;
-precedence left IDENTIFICADOR;
-precedence left CADENA;
-
-
-
-            /* -------------------GRAMATICA MINI C#------------------------ */
-
-Start ::= Program ;
+precedence left IDENT;
+precedence left DOUBLE,BOOL,STRING,INT,VOID;
+/* -------------------GRAMATICA FORMAL------------------------ */
 
 Program ::= Program Decl
-|  /* ε */ ;
+| /* ε */ ;
 
 Decl ::= VariableDecl
 | FunctionDecl
 | ClassDecl
-| InterfaceDecl 
-| error PUNTOYCOMA
-| error LLAVECLOSE;
+| InterfaceDecl
+| error SEMI
+| error RLLAV ;
 
-VariableDecl ::= Variable PUNTOYCOMA ;
+VariableDecl ::=  Variable SEMI 
+| CONSTANT Variable SEMI ;
 
-Variable ::= Type IDENTIFICADOR ;
+Variable ::=   Type:t IDENT:I {: RESULT = ""; RESULT=RESULT.toString().concat("["+I+","+t+"]");if (!Manejador.put(I,"v",t))  System.out.println("  La variable " + I + " ya ha sido declarada en el ambito actual"); :} ;
 
-Type ::= INT
-| DOUBLE
-| BOOL
-| CADENA
-| IDENTIFICADOR
-| Type CORCHETES ;
+Type ::= INT {: RESULT = "integer"; :}
+| DOUBLE {: RESULT = "double"; :}
+| BOOL {: RESULT = "bool"; :}
+| STRING {: RESULT = "string"; :}
+| IDENT:n1 {: RESULT = n1.toString(); :}
+| VOID
+| Type CORS ;
 
-FunctionDecl ::= Type FuncCont
-| VOID FuncCont ;
+FunctionDecl ::= FuncCont:n;
 
-FuncCont ::= IDENTIFICADOR POPEN Formals PCLOSE StmtBlock;
+FuncCont ::= Type:t IDENT:n {: if(!Manejador.put(n.toString(),"m",t)) {System.out.println("Nombre de metodo ya existe");} else {System.out.print(" METHOD ENTRY: "+n); Manejador.push();}:} LPAR Formals:p {:Manejador.parametros(n.toString(),p);:} RPAR StmtBlock:v {:Manejador.mreturn(t.toString(),v);System.out.print(" BLOCK EXIT"); Manejador.pop();System.out.print(" METHOD EXIT " +n); Manejador.pop();:} ;
 
-Formals ::= FormalsB Variable
-|  /* ε */ ;
-
-FormalsB ::= FormalsB Variable COMA 
+Formals ::= FormalsCont:a Variable:b {: if(a==null){a="";a = a.toString().concat(b.toString());}else{a = a.toString().concat(b.toString());} RESULT = a; :}
 | /* ε */ ;
 
-ClassDecl ::= CLASS IDENTIFICADOR Ext Imp LLAVEOPEN ClassField LLAVECLOSE ;
-
-Ext ::= EXTENDS IDENTIFICADOR
+FormalsCont ::= FormalsCont:a Variable:b COMMA {:if(a==null){a="";}; a = a.toString().concat(b+"-"); RESULT = a;:}
 | /* ε */ ;
 
-Imp ::= IMPLEMENTS ImpID
+ClassDecl ::= CLASS IDENT:n1 Ext:n2   
+{:
+    if(n2 == null)
+    {
+        if(Manejador.putClass(n1.toString(),null,null) != 0)
+        {
+            System.out.println("  La clase " + n1 + " ya ha sido declarada en el ambito actual");
+        }
+    }
+    else
+    {
+        switch(Manejador.putClass(n1.toString(),n2.toString(),null))
+        {
+            case 1:
+            System.out.println("  La clase " + n1 + " ya ha sido declarada en el ambito actual");
+            break;
+
+            case 2:
+            System.out.println("  La clase " + n2 + " no existe en el ambito actual");
+            break;                
+        } 
+    }
+:} 
+Imp LLLAV ClassField RLLAV 
+{:
+      System.out.print("  Saliendo de la clase: "+n1);
+      Manejador.pop();
+ :} ;
+
+Ext ::= EXTENDS IDENT:n1 {: RESULT = n1; :}
 | /* ε */ ;
 
-ImpID ::= ImpID COMA IDENTIFICADOR
-| IDENTIFICADOR ;
+Imp ::= IMPLEMENTS ImpID:e 
+{:
+    Manejador.getInterfaces(e.toString());
+:}
+| /* ε */ ;
+
+ImpID ::= ImpID:e1 COMMA IDENT: e2 {: RESULT = e1 + "," + e2; :}
+| IDENT:n3 {: RESULT = n3; :} ;
 
 ClassField ::= ClassField Field
 | /* ε */ ;
 
 Field ::= VariableDecl
-|  FunctionDecl ;
+| FunctionDecl ;
 
-InterfaceDecl ::= INTERFACE IDENTIFICADOR LLAVEOPEN InterfaceProt LLAVECLOSE ;
+InterfaceDecl ::= INTERFACE IDENT:n1 {: if(Manejador.putClass(n1.toString(),null,null) != 0) System.out.println("  La interfaz " + n1 + " ya ha sido declarada en el ambito actual"); :} LLLAV InterfaceProt RLLAV ;
 
 InterfaceProt ::= InterfaceProt Prototype
 | /* ε */ ;
@@ -120,91 +148,97 @@ InterfaceProt ::= InterfaceProt Prototype
 Prototype ::= Type ProtCont
 | VOID ProtCont;
 
-ProtCont ::= IDENTIFICADOR POPEN Formals PCLOSE PUNTOYCOMA ;
+ProtCont ::= IDENT LPAR Formals RPAR SEMI ;
 
-StmtBlock ::= LLAVEOPEN StmtContent LLAVECLOSE ;
+StmtBlock ::= LLLAV {:System.out.print(" BLOCK ENTRY"); Manejador.push(); :} StmtCont:p {:RESULT=p;:} RLLAV ;
 
-StmtContent ::= StmtBlockVariableDecl StmtContent
+StmtCont ::= StmtEnd:p StmtCont:q{:if(p!=null){if(q==null){q="";q = q.toString().concat(p.toString());}else {q = q.toString().concat(p.toString());}}; RESULT = q; :}
 | /* ε */ ;
 
-StmtBlockVariableDecl ::= VariableDecl 
-| Stmt ;
+StmtEnd ::= VariableDecl
+| Stmt:p {:RESULT = p;:} ;
 
-Stmt ::= StmtExpr PUNTOYCOMA
+Stmt ::= StmtExpr:m{:RESULT=m;:} SEMI
 | IfStmt
 | WhileStmt
 | ForStmt
 | BreakStmt
-| ReturnStmt
+| ReturnStmt:p {:RESULT = p;:}
 | PrintStmt
 | StmtBlock ;
 
-StmtExpr ::= Expr
+StmtExpr ::= Expr:n {:RESULT=n;:}
 | /* ε */ ;
 
-IfStmt ::= IF POPEN Expr PCLOSE Stmt ElseIfStmt ;
+IfStmt ::= IF LPAR Expr RPAR Stmt ElseIfStmt ;
 
 ElseIfStmt ::= ELSE Stmt
 | /* ε */ ;
 
-WhileStmt ::= WHILE POPEN Expr PCLOSE Stmt ;
+WhileStmt ::= WHILE LPAR Expr RPAR Stmt ;
 
-ForStmt ::= FOR POPEN StmtExpr PUNTOYCOMA Expr PUNTOYCOMA StmtExpr PCLOSE Stmt ;
+ForStmt ::= FOR LPAR StmtExpr SEMI Expr SEMI StmtExpr RPAR Stmt ;
 
-ReturnStmt ::= RETURN StmtExpr PUNTOYCOMA ;
+ReturnStmt ::= RETURN StmtExpr:p {:RESULT = p;:} SEMI ;
 
-BreakStmt ::= BREAK PUNTOYCOMA ;
+BreakStmt ::= BREAK SEMI ;
 
-PrintStmt ::= PRINT POPEN ExprPrint PCLOSE PUNTOYCOMA ;
+PrintStmt ::= PRINT LPAR ExprPrint RPAR SEMI ;
 
-ExprPrint ::= ExprPrint COMA Expr
-| Expr ;
+ExprPrint ::= ExprPrint:a COMMA Expr:b {:a = a.toString().concat(","+b.toString()); RESULT = a;:}
+| Expr:n {:RESULT=n.toString();:} ;
 
-Expr ::= LValue IGUAL Expr
-| Constant
-| LValue
+Expr ::= LValue:v EQUALS Expr:e 
+{: 
+    Manejador.Validar(v.toString(), e.toString());
+:} 
+| Constant:e {: RESULT = e; :}
+| LValue:e {: RESULT = e; :}
 | THIS
 | Call 
-| POPEN Expr PCLOSE
-| Expr SUMA Expr
-| Expr RESTA Expr
-| Expr MULT Expr
-| Expr DIVISION Expr
+| LPAR Expr:p RPAR {:RESULT = p;:}
+| Expr1:e1 PLUS Expr:e2 {: RESULT = e1 + "+" + e2; :}
+| Expr1:e1 MINUS Expr:e2 {: RESULT = e1 + "-" + e2; :}
+| Expr1:e1 TIMES Expr:e2 {: RESULT = e1 + "*" + e2; :}
+| Expr1:e1 DIV Expr:e2 {: RESULT = e1 + "/" + e2; :}
 | Expr MOD Expr
-| RESTA Expr
-| Expr MENOR Expr
-| Expr MENORIGUAL Expr
-| Expr MAYOR Expr
-| Expr MAYORIGUAL Expr
-| Expr DOBLEIGUAL Expr
-| Expr DISTINTO Expr
-| Expr AMPERSAN AMPERSAN Expr
-| Expr OR OR Expr
-| EXCLACLOSE Expr
-| NEW POPEN IDENTIFICADOR PCLOSE
-| NEWARRAY POPEN Expr COMA Type PCLOSE
-| READINTEGER PARENTESIS
-| READLINE PARENTESIS
-| MALLOC POPEN Expr PCLOSE ;
+| MINUS Expr
+| Expr LESS Expr
+| Expr LESSEQ Expr
+| Expr GREATER Expr
+| Expr GREATEREQ Expr
+| Expr EQTO Expr
+| Expr NOTEQ Expr
+| Expr AMPERSONS Expr
+| Expr OR Expr
+| EXCLAM Expr
+| NEW LPAR IDENT RPAR
+| NEWARRAY LPAR Expr COMMA Type RPAR
+| READINTEGER LPAR RPAR
+| READLINE LPAR RPAR
+| MALLOC LPAR Expr RPAR ;
 
-LValue ::= IDENTIFICADOR
-| Expr PUNTO IDENTIFICADOR
-| Expr CORCHETEOPEN Expr CORCHETECLOSE ;
+Expr1 ::= Constant:e {: RESULT = e; :}
+| IDENT:e {: RESULT = e; :} ;
 
-Call ::= IDENTIFICADOR POPEN Actuals PCLOSE 
-| Expr PUNTO IDENTIFICADOR CallCont
-| Expr PUNTO LibCall CallCont ;
+LValue ::= IDENT:e {: RESULT = e; :}
+| Expr PERIOD IDENT
+| Expr LCOR Expr RCOR ;
 
-CallCont ::= POPEN Actuals PCLOSE ;
+Call ::= IDENT:n {:if(!Manejador.get_name(n.toString(), "m")){ System.out.println("***WARNING*** ==> Método: " + n + " no ha sido declarado");}:} LPAR Actuals:n1 {:Manejador.tipos(n.toString(),n1.toString());:} RPAR 
+| Expr PERIOD IDENT CallCont
+| Expr PERIOD LibCall CallCont ;
 
-LibCall ::= GETBYTE POPEN Expr PCLOSE
-| SETBYTE POPEN Expr COMA Expr PCLOSE ;
+CallCont ::= LPAR Actuals RPAR ;
 
-Actuals ::= ExprPrint
+LibCall ::= GETBYTE LPAR Expr RPAR 
+| SETBYTE LPAR Expr COMMA Expr RPAR ;
+
+Actuals ::= ExprPrint:n {:System.out.println(n); RESULT=n;:}
 | /* ε */ ;
 
-Constant ::= intConstant
-| doubleConstant
-| boolConstant
-| CADENA
-| NULL ;
+Constant ::= intConstant:e {: RESULT = e + "&int"; :}
+| doubleConstant:e {: RESULT = e + "&dob"; :}
+| boolConstant:e {: RESULT = e + "&bool"; :}
+| stringConstant:e {: RESULT = e + "&str"; :}
+| NULL {:RESULT = "&null"; :}  ;
