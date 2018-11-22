@@ -86,7 +86,7 @@ Type ::= INT {: RESULT = "integer"; :}
 
 FunctionDecl ::= FuncCont:n;
 
-FuncCont ::= Type:t IDENT:n {: if(!Manejador.put(n.toString(),"m",t)) {System.out.println("Nombre de metodo ya existe");} else {System.out.print(" METHOD ENTRY: "+n); Manejador.push();}:} LPAR Formals:p {:Manejador.parametros(n.toString(),p);:} RPAR StmtBlock:v {:Manejador.mreturn(t.toString(),v);System.out.print(" BLOCK EXIT"); Manejador.pop();System.out.print(" METHOD EXIT " +n); Manejador.pop();:} ;
+FuncCont ::= Type:t IDENT:n {: if(!Manejador.put(n.toString(),"m",t)) {System.out.println("Nombre de metodo ya existe");} else {System.out.print(" Ingreso de Metodo: "+n); Manejador.push();}:} LPAR Formals:p {:Manejador.parametros(n.toString(),p);:} RPAR StmtBlock:v {:Manejador.mreturn(t.toString(),v);System.out.print(" Salida de Block"); Manejador.pop();System.out.print(" Salida del Metodo " +n); Manejador.pop();:} ;
 
 Formals ::= FormalsCont:a Variable:b {: if(a==null){a="";a = a.toString().concat(b.toString());}else{a = a.toString().concat(b.toString());} RESULT = a; :}
 | /*  */
@@ -143,7 +143,7 @@ ClassField ::= ClassField Field
 Field ::= VariableDecl
 | FunctionDecl ;
 
-InterfaceDecl ::= INTERFACE IDENT:n1 {: if(Manejador.putClass(n1.toString(),null,null) != 0) System.out.println("  La interfaz " + n1 + " ya ha sido declarada en el ambito actual"); :} LLLAV InterfaceProt RLLAV ;
+InterfaceDecl ::= INTERFACE IDENT:n1 {: if(Manejador.putClass(n1.toString(),null,null) != 0) System.out.println("  La interfaz " + n1 + " ya declarada en el ambito actual"); :} LLLAV InterfaceProt RLLAV ;
 
 InterfaceProt ::= InterfaceProt Prototype
 | /* ε */ ;
@@ -228,7 +228,7 @@ LValue ::= IDENT:e {: RESULT = e; :}
 | Expr PERIOD IDENT
 | Expr LCOR Expr RCOR ;
 
-Call ::= IDENT:n {:if(!Manejador.get_name(n.toString(), "m")){ System.out.println("***WARNING*** ==> Método: " + n + " no ha sido declarado");}:} LPAR Actuals:n1 {:Manejador.tipos(n.toString(),n1.toString());:} RPAR 
+Call ::= IDENT:n {:if(!Manejador.get_name(n.toString(), "m")){ System.out.println(" advertencia ==> Método: " + n + " no ha sido declarado");}:} LPAR Actuals:n1 {:Manejador.tipos(n.toString(),n1.toString());:} RPAR 
 | Expr PERIOD IDENT CallCont
 | Expr PERIOD LibCall CallCont ;
 
