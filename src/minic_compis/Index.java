@@ -172,7 +172,7 @@ public class Index extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Análisis Léxico");
+        jMenu2.setText("Análisis");
 
         jMenuArchivoC.setText("Cargar archivo C#");
         jMenuArchivoC.addActionListener(new java.awt.event.ActionListener() {
@@ -233,21 +233,13 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuImportarActionPerformed
 
     private void jMenuAnalizarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAnalizarCActionPerformed
-        // TODO add your handling code here:
-        //Se invoca la conversión del archivo tomando poco referencia la ruta del archivo que se encuentra en el Label.
-       /*
-        txtListaToken.setText(" ");
-        if (lblRutaC.getText()!= "") {
-            try {
-                GenerarListaTokens(lblRutaC.getText());
-            } catch (IOException ex) {
-                Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            JOptionPane.showMessageDialog(null, "Analizando... \n Archivo creado ubicado en:\n "+lblRutaC.getText());
-        }else{
-            JOptionPane.showMessageDialog(null,"Dirección de Archivo no válida. \nIngrese un archivo correcto.");
+        try {
+            // TODO add your handling code here:
+            AnalizarArchivo();
+        } catch (IOException ex) {
+            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
         }
-     */   
+       
     }//GEN-LAST:event_jMenuAnalizarCActionPerformed
 
     private void jMenuArchivoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuArchivoCActionPerformed
@@ -359,7 +351,7 @@ public class Index extends javax.swing.JFrame {
         String ruta = "";
         JFileChooser abrirArchivo = new JFileChooser();
        //Filtro
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.frag","frag");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
         abrirArchivo.setFileFilter(filtro);
        
         int seleccion = abrirArchivo.showOpenDialog(jMenu1);
@@ -565,6 +557,49 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JTextArea txtArchivoC;
     private javax.swing.JTextArea txtListaToken;
     // End of variables declaration//GEN-END:variables
+
+    private void AnalizarArchivo() throws IOException {
+        String[] ArchivoPrueba = {lblRutaC.getText()};
+            String Valor;
+            Sintaxis.main(ArchivoPrueba);
+            FileWriter ef = new FileWriter("C:/Users/Walter Rodriguez/Documents/GitHub/Compis/miniCsharp/src/minic_compis/TablaSimbolOut.txt");
+            BufferedWriter e = new BufferedWriter(ef);
+            e.write("ID-----------------TIPO_VALOR-----------------VALOR-----------------VARIABLE-----------------DATOS DEL AMBITO");
+            e.newLine();
+            for (int i = 0; i < Manejador.output.size(); i++) 
+            {
+               Resultado aux = Manejador.output.get(i);
+               String Tipo = aux.simbolo.type;
+               String Descripcion = aux.simbolo.elementType;
+               if(aux.simbolo.value != null)
+               {
+                    Valor = aux.simbolo.value.toString();
+               }
+               else
+               {
+                   Valor = "??";
+               }
+               String Current = aux.simbolo.ambito;
+               e.write(aux.nombre + SeparadorLineas(aux.nombre,25,0) + Tipo +SeparadorLineas(Tipo, 50,30)+ Descripcion+SeparadorLineas(Descripcion, 70,50)+Valor+SeparadorLineas(Valor, 90,70)+Current);
+               e.newLine();
+            }
+            e.close();
+            ef.close();        
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String SeparadorLineas(String nombre, int i, int i0) {
+         String nuevoEspacio = "";
+            int t = nombre.length();
+            int ciclos = i - (t+i0);
+            for (int j = 0; j < ciclos; j++) 
+            {
+                nuevoEspacio+=" ";
+            }
+            return nuevoEspacio;
+    }
+    
+    
 
 
 }

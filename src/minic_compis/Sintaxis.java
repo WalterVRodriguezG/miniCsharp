@@ -782,7 +782,7 @@ class CUP$Sintaxis$actions {
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Program",0, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Program",0, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -962,7 +962,7 @@ class CUP$Sintaxis$actions {
 		int nright = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object n = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
  if(!Manejador.put(n.toString(),"m",t)) {System.out.println("Nombre de metodo ya existe");} else {System.out.print(" METHOD ENTRY: "+n); Manejador.push();}
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$0",40, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$0",40, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -980,7 +980,7 @@ class CUP$Sintaxis$actions {
 		int pright = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object p = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
 Manejador.parametros(n.toString(),p);
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$1",41, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$1",41, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1027,7 +1027,7 @@ Manejador.parametros(n.toString(),p);
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Formals",6, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Formals",6, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1051,7 +1051,7 @@ Manejador.parametros(n.toString(),p);
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("FormalsCont",37, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("FormalsCont",37, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1087,7 +1087,7 @@ Manejador.parametros(n.toString(),p);
         } 
     }
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$2",42, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$2",42, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1128,7 +1128,7 @@ Manejador.parametros(n.toString(),p);
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Ext",26, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Ext",26, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1151,7 +1151,7 @@ Manejador.parametros(n.toString(),p);
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Imp",27, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Imp",27, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1196,7 +1196,7 @@ Manejador.parametros(n.toString(),p);
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("ClassField",34, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("ClassField",34, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1226,7 +1226,7 @@ Manejador.parametros(n.toString(),p);
 		int n1right = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object n1 = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
  if(Manejador.putClass(n1.toString(),null,null) != 0) System.out.println("  La interfaz " + n1 + " ya ha sido declarada en el ambito actual"); 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$3",43, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$3",43, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1258,7 +1258,7 @@ Manejador.parametros(n.toString(),p);
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("InterfaceProt",35, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("InterfaceProt",35, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1294,7 +1294,7 @@ Manejador.parametros(n.toString(),p);
             {
               Object RESULT =null;
 System.out.print(" BLOCK ENTRY"); Manejador.push(); 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$4",44, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$4",44, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1306,7 +1306,7 @@ System.out.print(" BLOCK ENTRY"); Manejador.push();
 		int pright = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object p = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
 RESULT=p;
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$5",45, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$5",45, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1344,7 +1344,7 @@ RESULT=p;
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("StmtCont",39, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("StmtCont",39, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1377,7 +1377,7 @@ RESULT=p;
 		int mright = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object m = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
 RESULT=m;
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$6",46, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$6",46, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1478,7 +1478,7 @@ RESULT=m;
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("StmtExpr",31, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("StmtExpr",31, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1505,7 +1505,7 @@ RESULT=m;
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("ElseIfStmt",33, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("ElseIfStmt",33, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1535,7 +1535,7 @@ RESULT=m;
 		int pright = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object p = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
 RESULT = p;
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$7",47, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$7",47, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1935,7 +1935,7 @@ RESULT = p;
 		int nright = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object n = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
 if(!Manejador.get_name(n.toString(), "m")){ System.out.println("***WARNING*** ==> Método: " + n + " no ha sido declarado");}
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$8",48, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$8",48, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -1950,7 +1950,7 @@ if(!Manejador.get_name(n.toString(), "m")){ System.out.println("***WARNING*** ==
 		int n1right = ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()).right;
 		Object n1 = (Object)((java_cup.runtime.Symbol) CUP$Sintaxis$stack.peek()).value;
 Manejador.tipos(n.toString(),n1.toString());
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$9",49, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("NT$9",49, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 
@@ -2033,7 +2033,7 @@ Manejador.tipos(n.toString(),n1.toString());
             {
               Object RESULT =null;
 
-              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Actuals",24, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), RESULT);
+              CUP$Sintaxis$result = parser.getSymbolFactory().newSymbol("Actuals",24, ((java_cup.runtime.Symbol)CUP$Sintaxis$stack.peek()), (Symbol) RESULT);
             }
           return CUP$Sintaxis$result;
 

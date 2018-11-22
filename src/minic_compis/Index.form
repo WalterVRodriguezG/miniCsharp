@@ -29,7 +29,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="An&#xe1;lisis L&#xe9;xico"/>
+            <Property name="text" type="java.lang.String" value="An&#xe1;lisis"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuArchivoC">
