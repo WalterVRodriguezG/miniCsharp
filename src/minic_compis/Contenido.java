@@ -25,9 +25,9 @@ public class Contenido {
     
     public Contenido()
     {
-        this.value = "??";
-        this.type = "??";
-        this.elementType = "??";        
+        this.value = "vInicial";
+        this.type = "vInicial";
+        this.elementType = "vInicial";        
     }
     
    public String getType()

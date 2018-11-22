@@ -27,7 +27,8 @@ public class Manejador {
     }
     
     public static int putClass(String c, String sc, Contenido s)
-    {
+    { 
+        try{
         if(root.table.containsKey(c))
         {
             System.out.println("  Entrando a la Clase: " + c);
@@ -68,12 +69,17 @@ public class Manejador {
             output.add(v_class);            
             return 0;
         }
+        }catch(Exception e){
+            System.out.println("    Error ");
+        }
+         return 0;
+        
     }
     
     public static void getInterfaces(String I)
     {
         String[] Interfaces;
-        
+        try{
         if(I.contains(","))
         {
             Interfaces = I.split(",");
@@ -93,10 +99,15 @@ public class Manejador {
                 System.out.println("  La interfaz " + I + " no existe en el ambito actual" + " -> Ambito Actual: "+top);
             }
         }
+        }
+        catch(Exception e){
+            System.out.println("    Error   ");
+        }
     }
     
     public static boolean put(Object name, Object tipovar ,Object tipo)
     {
+        try{
         if(!top.table.containsKey(name))
         {
             Contenido Data = new Contenido(tipo.toString(),tipovar.toString(),null);            
@@ -122,7 +133,9 @@ public class Manejador {
 }
             return true;
         }
-        return false;
+        return false;}
+        catch(Exception e){System.out.println(e);}
+         return false;
     }
     
     public static sym get(String name)
@@ -140,14 +153,22 @@ public class Manejador {
     
     public static void push()
     {
+        try{
         top = new Manejador(top);
         System.out.println(" -> Ambito Actual: "+top);
+        }catch(Exception e){
+            System.out.println("    Me perdí... ");
+        }
     }
     
     public static void pop()
     {
+        try{
         top = top.prev;
         System.out.println(" -> Ambito Actual: "+top);
+        }catch(Exception e){
+            System.out.println("    Otra vez me perdí   ");
+        }
     }
     
 
@@ -165,6 +186,7 @@ public class Manejador {
     
     public static void Validar(String Lvalue, String Valor)
     {
+        try{
         if(top.table.containsKey(Lvalue))
         {
             Valor = Valor.replaceAll("&int", "");
@@ -338,6 +360,10 @@ public class Manejador {
         {
             System.out.println("  Error: No se puede asignar realizar la asignacion de valor a " + Lvalue + " ya que no esta declarada -> Ambito Actual: "+top);
         }
+        }
+        catch(Exception e){
+            System.out.println("    No pude retornar Valor     ");
+        }
     }
     
     public static boolean isNumeric(String S)
@@ -348,6 +374,7 @@ public class Manejador {
         }
         catch(NumberFormatException nfe)
         {
+            System.out.println("    No puede retornar valor numerico ");
             return false;
         }
         return true;
@@ -355,8 +382,14 @@ public class Manejador {
     
     public static String ReturnVal(String S)
     {
+        try{
         Contenido aux = (Contenido) (top.table.get(S));       
         return aux.value.toString();
+        }
+        catch(Exception e){
+            System.out.println("    No pude retornar un String  ");
+            }
+         return null;
     }
     
 //insertar postfijo y Solver
@@ -370,6 +403,7 @@ public class Manejador {
     
    private static boolean RevFloat(String Result)
   {
+      try{
       float N = Float.parseFloat(Result);
       
       if(N % 1 == 0)
@@ -379,12 +413,16 @@ public class Manejador {
       else
       {
           return false;
+      }}
+      catch(Exception e){
+          System.out.println("  No pude retornar un valor decimal   ");
       }
+         return false;
   }
 
   
   public static void parametros(String id, Object formals){//método que inserta los parámetros de su firma y los guarda en el hashmap m_table.
-  
+  try{
       if (m_table.containsKey(id)) {
           Contenido aux = (Contenido)m_table.get(id);
           aux.vars = formals.toString();
@@ -397,11 +435,15 @@ public class Manejador {
               }
           }
       }
-      
+  }
+  catch(Exception e){
+      System.out.println("  No se pudo insertar un valor a la Hash Table");
+  }
       
 }
    
   public static boolean tipos(String metodo, String var){
+      try{
         if (m_table.containsKey(metodo)) {
             Contenido aux = (Contenido)m_table.get(metodo);
           ArrayList<String> firma = new ArrayList<>();//Arreglo que guarda la firma de métodos del metodo -> [var1, int], [var2, int]
@@ -479,10 +521,15 @@ public class Manejador {
 
       }
       return false;
+      }
+      catch(Exception e){
+          System.out.println("  No se pudo validar el tipo.    ");
+      }
+         return false;
 }   
   
   public static void mreturn(String tipo, Object regreso){
-      
+      try{
       if (regreso!=null) {
                 if (top.table.containsKey(regreso)) {
           Contenido aux = (Contenido)top.table.get(regreso);
@@ -532,10 +579,16 @@ public class Manejador {
       }
       }
       else{}
+      
+  }
+  catch(Exception e){
+            System.out.println("    No se pudo agregar el booleano  ");
+    }
 }
   
   public static boolean get_name(String n, String m)
   {
+      try{
       if (m.compareTo("m")==0) {
           if (!m_table.containsKey(n)) {
               return false;
@@ -552,7 +605,11 @@ public class Manejador {
               return true;
           }
       }
-    
+      }
+      catch(Exception e){
+          System.out.println("  No se pudo Comparar m ");
+      }
+         return false;
 }
   
 

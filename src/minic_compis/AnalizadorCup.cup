@@ -61,7 +61,8 @@ precedence left DOUBLE,BOOL,STRING,INT,VOID;
 /* -------------------GRAMATICA FORMAL------------------------ */
 
 Program ::= Program Decl
-| /* ε */ ;
+|
+;
 
 Decl ::= VariableDecl
 | FunctionDecl
@@ -88,10 +89,12 @@ FunctionDecl ::= FuncCont:n;
 FuncCont ::= Type:t IDENT:n {: if(!Manejador.put(n.toString(),"m",t)) {System.out.println("Nombre de metodo ya existe");} else {System.out.print(" METHOD ENTRY: "+n); Manejador.push();}:} LPAR Formals:p {:Manejador.parametros(n.toString(),p);:} RPAR StmtBlock:v {:Manejador.mreturn(t.toString(),v);System.out.print(" BLOCK EXIT"); Manejador.pop();System.out.print(" METHOD EXIT " +n); Manejador.pop();:} ;
 
 Formals ::= FormalsCont:a Variable:b {: if(a==null){a="";a = a.toString().concat(b.toString());}else{a = a.toString().concat(b.toString());} RESULT = a; :}
-| /* ε */ ;
+| /*  */
+;
 
 FormalsCont ::= FormalsCont:a Variable:b COMMA {:if(a==null){a="";}; a = a.toString().concat(b+"-"); RESULT = a;:}
-| /* ε */ ;
+| /*  */
+;
 
 ClassDecl ::= CLASS IDENT:n1 Ext:n2   
 {:

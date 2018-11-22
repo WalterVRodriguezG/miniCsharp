@@ -564,7 +564,7 @@ public class Index extends javax.swing.JFrame {
             Sintaxis.main(ArchivoPrueba);
             FileWriter ef = new FileWriter("C:/Users/Walter Rodriguez/Documents/GitHub/Compis/miniCsharp/src/minic_compis/TablaSimbolOut.txt");
             BufferedWriter e = new BufferedWriter(ef);
-            e.write("ID-----------------TIPO_VALOR-----------------VALOR-----------------VARIABLE-----------------DATOS DEL AMBITO");
+            //e.write("ID-----------------TIPO_VALOR-----------------VALOR-----------------VARIABLE-----------------DATOS DEL AMBITO");
             e.newLine();
             for (int i = 0; i < Manejador.output.size(); i++) 
             {
@@ -577,26 +577,15 @@ public class Index extends javax.swing.JFrame {
                }
                else
                {
-                   Valor = "??";
+                   Valor = " _ ";
                }
                String Current = aux.simbolo.ambito;
-               e.write(aux.nombre + SeparadorLineas(aux.nombre,25,0) + Tipo +SeparadorLineas(Tipo, 50,30)+ Descripcion+SeparadorLineas(Descripcion, 70,50)+Valor+SeparadorLineas(Valor, 90,70)+Current);
+               e.write("ID: "+aux.nombre +"\n"+ " ** TIPO_VALOR: "+ Tipo +"\n"+ " ** Valor: "+ Descripcion+"\n"+" ** Variable: "+Valor+"\n"+" ** Ambito: "+Current);
                e.newLine();
             }
             e.close();
             ef.close();        
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private String SeparadorLineas(String nombre, int i, int i0) {
-         String nuevoEspacio = "";
-            int t = nombre.length();
-            int ciclos = i - (t+i0);
-            for (int j = 0; j < ciclos; j++) 
-            {
-                nuevoEspacio+=" ";
-            }
-            return nuevoEspacio;
     }
     
     

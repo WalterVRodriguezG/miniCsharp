@@ -1,5 +1,5 @@
 package minic_compis;
-import static minic_compis.Token.*;
+//import static minic_compis.Token.*;
 import java_cup.runtime.*;
 import java.io.*;
 
@@ -9,7 +9,6 @@ import java.io.*;
 %column
 %line
 %cup
-%type Symbol
 %unicode
 /*
 %{

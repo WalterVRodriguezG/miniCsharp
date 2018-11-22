@@ -1,0 +1,11 @@
+
+ID: p1
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {a=minic_compis.Contenido@4cdf32c5, b=minic_compis.Contenido@760c4768, c=minic_compis.Contenido@39bd61b8, global3=minic_compis.Contenido@3890c7fb, global2=minic_compis.Contenido@dec8336, global1=minic_compis.Contenido@19cfa2e4, f1=minic_compis.Contenido@4b2da0c4, result3=minic_compis.Contenido@75bc0945, result2=minic_compis.Contenido@1ca0d1f7, result1=minic_compis.Contenido@789c8805}
+ID: y
+ ** TIPO_VALOR: bool
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {a=minic_compis.Contenido@4cdf32c5, b=minic_compis.Contenido@760c4768, c=minic_compis.Contenido@39bd61b8, global3=minic_compis.Contenido@3890c7fb, global2=minic_compis.Contenido@dec8336, global1=minic_compis.Contenido@19cfa2e4, y=minic_compis.Contenido@4bf2e0f4, f1=minic_compis.Contenido@4b2da0c4, result3=minic_compis.Contenido@75bc0945, result2=minic_compis.Contenido@1ca0d1f7, result1=minic_compis.Contenido@789c8805}
