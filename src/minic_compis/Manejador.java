@@ -12,13 +12,14 @@ import java.util.*;
  * @author Walter Rodriguez
  */
 public class Manejador {
-     static Manejador root = new Manejador(null);
+    static Manejador root = new Manejador(null);
     static Manejador top = root;
     static HashMap m_table = new HashMap();
     static ArrayList<Resultado> output = new ArrayList<>();
     HashMap table;
     String Operacion;
     Manejador prev;
+    
     
     public Manejador (Manejador p)
     {
@@ -27,11 +28,13 @@ public class Manejador {
     }
     
     public static int putClass(String c, String sc, Contenido s)
-    { 
+    {
+        String Mensaje;
         try{
         if(root.table.containsKey(c))
         {
             System.out.println("  Entrando a la Clase: " + c);
+            Mensaje = " Entrando a la Clase: ".concat(c);
             push();
             return 1;
         }
@@ -39,6 +42,7 @@ public class Manejador {
         {
             root.table.put(c, s);
             System.out.println("  Entrando a la Clase: " + c);
+            Mensaje = " Entrando a la Clase: ".concat(c);
             top.table.put(c, s);
             push();
             s = new Contenido();
@@ -52,6 +56,7 @@ public class Manejador {
         {
             root.table.put(c, s);
             System.out.println("  Entrando a la Clase: " + c);
+            Mensaje = " Entrando a la Clase: ".concat(c);
             top.table.put(c, s);
             push();
             return 2;
@@ -60,6 +65,7 @@ public class Manejador {
         {
             root.table.put(c, s);
             System.out.println("  Entrando a la Clase: " + c);
+            Mensaje = " Entrando a la Clase: ".concat(c);
             top.table.put(c, s);
             push();
             s = new Contenido();
@@ -89,6 +95,7 @@ public class Manejador {
                 if(!root.table.containsKey(Interfaces[i]))
                 {
                    System.out.println("  La interfaz " + Interfaces[i] + " no existe en el ambito actual" + " -> Ambito Actual: "+top); 
+                   
                 }
             }
         }

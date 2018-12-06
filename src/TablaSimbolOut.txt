@@ -1,0 +1,111 @@
+
+ID: p1
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {a=minic_compis.Contenido@73824775, b=minic_compis.Contenido@631a4557, c=minic_compis.Contenido@f5d3c21, f2=minic_compis.Contenido@e7a27d6}
+ID: a
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {a=minic_compis.Contenido@73824775, b=minic_compis.Contenido@631a4557, c=minic_compis.Contenido@f5d3c21, f2=minic_compis.Contenido@e7a27d6}
+ID: number1
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: number2
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: number3
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: numberA
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: numberB
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: numberC
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: My_String
+ ** TIPO_VALOR: string
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: global1
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: global2
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: global3
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: result1
+ ** TIPO_VALOR: bool
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: result2
+ ** TIPO_VALOR: bool
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: result3
+ ** TIPO_VALOR: bool
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: f1
+ ** TIPO_VALOR: integer
+ ** Valor: m
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: a
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {global3=minic_compis.Contenido@332fed67, number3=minic_compis.Contenido@294e6263, My_String=minic_compis.Contenido@73808e83, number1=minic_compis.Contenido@1bb82545, number2=minic_compis.Contenido@585e4bb7, f1=minic_compis.Contenido@5740fd68, numberC=minic_compis.Contenido@2907acba, global2=minic_compis.Contenido@627c30d9, global1=minic_compis.Contenido@792deddf, numberA=minic_compis.Contenido@5966c8ef, numberB=minic_compis.Contenido@3ae4c8b, result3=minic_compis.Contenido@1b486fb3, result2=minic_compis.Contenido@18b16e84, result1=minic_compis.Contenido@e642982}
+ID: b
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {global3=minic_compis.Contenido@332fed67, number3=minic_compis.Contenido@294e6263, My_String=minic_compis.Contenido@73808e83, number1=minic_compis.Contenido@1bb82545, number2=minic_compis.Contenido@585e4bb7, f1=minic_compis.Contenido@5740fd68, numberC=minic_compis.Contenido@2907acba, global2=minic_compis.Contenido@627c30d9, global1=minic_compis.Contenido@792deddf, numberA=minic_compis.Contenido@5966c8ef, numberB=minic_compis.Contenido@3ae4c8b, result3=minic_compis.Contenido@1b486fb3, result2=minic_compis.Contenido@18b16e84, result1=minic_compis.Contenido@e642982}
+ID: c
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {global3=minic_compis.Contenido@332fed67, number3=minic_compis.Contenido@294e6263, My_String=minic_compis.Contenido@73808e83, number1=minic_compis.Contenido@1bb82545, number2=minic_compis.Contenido@585e4bb7, f1=minic_compis.Contenido@5740fd68, numberC=minic_compis.Contenido@2907acba, global2=minic_compis.Contenido@627c30d9, global1=minic_compis.Contenido@792deddf, numberA=minic_compis.Contenido@5966c8ef, numberB=minic_compis.Contenido@3ae4c8b, result3=minic_compis.Contenido@1b486fb3, result2=minic_compis.Contenido@18b16e84, result1=minic_compis.Contenido@e642982}
+ID: p1
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {a=minic_compis.Contenido@78c7e63b, b=minic_compis.Contenido@6b9172e9, c=minic_compis.Contenido@33fcbddf}
+ID: y
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {global3=minic_compis.Contenido@332fed67, number3=minic_compis.Contenido@294e6263, My_String=minic_compis.Contenido@73808e83, number1=minic_compis.Contenido@1bb82545, number2=minic_compis.Contenido@585e4bb7, f1=minic_compis.Contenido@5740fd68, numberC=minic_compis.Contenido@2907acba, global2=minic_compis.Contenido@627c30d9, global1=minic_compis.Contenido@792deddf, numberA=minic_compis.Contenido@5966c8ef, numberB=minic_compis.Contenido@3ae4c8b, result3=minic_compis.Contenido@1b486fb3, result2=minic_compis.Contenido@18b16e84, result1=minic_compis.Contenido@e642982}
+ID: y
+ ** TIPO_VALOR: bool
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {a=minic_compis.Contenido@78c7e63b, b=minic_compis.Contenido@6b9172e9, c=minic_compis.Contenido@33fcbddf, y=minic_compis.Contenido@24366910}

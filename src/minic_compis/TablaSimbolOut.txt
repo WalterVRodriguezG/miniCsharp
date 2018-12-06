@@ -1,11 +1,46 @@
 
 ID: p1
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {c3=minic_compis.Contenido@63b35b8c, c4=minic_compis.Contenido@260d7f7e, a=minic_compis.Contenido@17356969, b=minic_compis.Contenido@6b28e9e5, c=minic_compis.Contenido@12bea037, f2=minic_compis.Contenido@5f05db91, c1=minic_compis.Contenido@63c78f39, c2=minic_compis.Contenido@4f0c3565}
+ID: a
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {c3=minic_compis.Contenido@63b35b8c, c4=minic_compis.Contenido@260d7f7e, a=minic_compis.Contenido@17356969, b=minic_compis.Contenido@6b28e9e5, c=minic_compis.Contenido@12bea037, f2=minic_compis.Contenido@5f05db91, c1=minic_compis.Contenido@63c78f39, c2=minic_compis.Contenido@4f0c3565}
+ID: number1
  ** TIPO_VALOR: integer
  ** Valor: v
  ** Variable:  _ 
- ** Ambito: {a=minic_compis.Contenido@54b9826d, b=minic_compis.Contenido@7c78ef00, c=minic_compis.Contenido@16b0546b, global3=minic_compis.Contenido@78537a84, global2=minic_compis.Contenido@60612509, global1=minic_compis.Contenido@5bdac6ea, f1=minic_compis.Contenido@4f5dc2f6, result3=minic_compis.Contenido@2cb916c3, result2=minic_compis.Contenido@45993730, result1=minic_compis.Contenido@487944ff}
-ID: y
- ** TIPO_VALOR: bool
+ ** Ambito: {}
+ID: number2
+ ** TIPO_VALOR: integer
  ** Valor: v
  ** Variable:  _ 
- ** Ambito: {a=minic_compis.Contenido@54b9826d, b=minic_compis.Contenido@7c78ef00, c=minic_compis.Contenido@16b0546b, global3=minic_compis.Contenido@78537a84, global2=minic_compis.Contenido@60612509, global1=minic_compis.Contenido@5bdac6ea, y=minic_compis.Contenido@d79698b, f1=minic_compis.Contenido@4f5dc2f6, result3=minic_compis.Contenido@2cb916c3, result2=minic_compis.Contenido@45993730, result1=minic_compis.Contenido@487944ff}
+ ** Ambito: {}
+ID: number3
+ ** TIPO_VALOR: integer
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: numberA
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: numberB
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: numberC
+ ** TIPO_VALOR: double
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
+ID: My_String
+ ** TIPO_VALOR: string
+ ** Valor: v
+ ** Variable:  _ 
+ ** Ambito: {}
