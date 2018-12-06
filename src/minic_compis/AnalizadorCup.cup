@@ -45,18 +45,18 @@ parser code {:
 /* ------------Declaracion de simbolos terminales y no terminales---------- *
 
 /*--------------TERMINALES-----------*/
-terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS, IMPLEMENTS, FOR, WHILE, IF, ELSE, RETURN, BREAK, NEW, NEWARRAY, PRINT, READINTEGER, READLINE, MALLOC, IDENT, GETBYTE, SETBYTE, PLUS, MINUS, TIMES, DIV, MOD, LESS, LESSEQ, GREATER, GREATEREQ, EQUALS, EQTO, NOTEQ, AMPERSONS, OR, EXCLAM, SEMI, COMMA, PERIOD, LCOR, RCOR, LPAR, RPAR, LLLAV, RLLAV, CORS, PARS, LLAVS, CONSTANT;
+terminal VOID, INT, DOUBLE, BOOL, STRING, CLASS, INTERFACE, NULL, THIS, EXTENDS, IMPLEMENTS, FOR, WHILE, IF, ELSE, RETURN, BREAK, NEW, NEWARRAY, PRINT, READINTEGER, READLINE, MALLOC, IDENTIFICADOR, GETBYTE, SETBYTE, SUMA, RESTA, MULTI, DIV, MOD, MENOR, MENORIGUAL, MAYOR, MAYORIGUAL, IGUAL, IGUALCOMPARACION, DISTINTO, AMPERSONS, OR, EXCLAM, PUNTOYCOMA, COMA, PERIOD, CORABIERTO, CORCERRADO, PARABIERTO, PARCERRADO, LLAVABIERTA, LLAVCERRADA, CORCHETES, PARENTESIS, LLAVES, CONSTANT, PUNTO;
 terminal Object intConstant, doubleConstant, boolConstant, stringConstant, hexConstant;
 
 /*--------------NO TERMINALES-----------*/
 non terminal  Program, Decl, VariableDecl, Variable, Type, FunctionDecl, Formals, ClassDecl, Field, InterfaceDecl, Prototype, StmtBlock, Stmt, IfStmt, WhileStmt, ForStmt, ReturnStmt, BreakStmt, PrintStmt, Expr,Expr1, LValue, Call, LibCall, Actuals, Constant, Ext, Imp, ImpID, ProtCont, FuncCont, StmtExpr, ExprPrint, ElseIfStmt, ClassField, InterfaceProt, CallCont,FormalsCont, StmtEnd, StmtCont;
 
 /*--------------PRECEDENCIAS-----------*/
-precedence left EQUALS;
-precedence left PLUS, MINUS, TIMES, DIV, MOD;
-precedence left LESS, LESSEQ, GREATER, GREATEREQ, EQTO, NOTEQ, AMPERSONS, OR, EXCLAM ;
+precedence left IGUAL;
+precedence left SUMA, RESTA, MULTI, DIV, MOD;
+precedence left MENOR, MENORIGUAL, MAYOR, MAYORIGUAL, IGUAL, DISTINTO, AMPERSONS, OR, EXCLAM ;
 precedence left ELSE;
-precedence left IDENT;
+precedence left IDENTIFICADOR;
 precedence left DOUBLE,BOOL,STRING,INT,VOID;
 /* -------------------GRAMATICA FORMAL------------------------ */
 
@@ -68,35 +68,35 @@ Decl ::= VariableDecl
 | FunctionDecl
 | ClassDecl
 | InterfaceDecl
-| error SEMI
-| error RLLAV ;
+| error PUNTOYCOMA
+| error LLAVCERRADA ;
 
-VariableDecl ::=  Variable SEMI 
-| CONSTANT Variable SEMI ;
+VariableDecl ::=  Variable PUNTOYCOMA
+| CONSTANT Variable PUNTOYCOMA ;
 
-Variable ::=   Type:t IDENT:I {: RESULT = ""; RESULT=RESULT.toString().concat("["+I+","+t+"]");if (!Manejador.put(I,"v",t))  System.out.println("  La variable " + I + " ya ha sido declarada en el ambito actual"); :} ;
+Variable ::=   Type:t IDENTIFICADOR:I {: RESULT = ""; RESULT=RESULT.toString().concat("["+I+","+t+"]");if (!Manejador.put(I,"v",t))  System.out.println("  La variable " + I + " ya ha sido declarada en el ambito actual"); :} ;
 
 Type ::= INT {: RESULT = "integer"; :}
 | DOUBLE {: RESULT = "double"; :}
 | BOOL {: RESULT = "bool"; :}
 | STRING {: RESULT = "string"; :}
-| IDENT:n1 {: RESULT = n1.toString(); :}
+| IDENTIFICADOR:n1 {: RESULT = n1.toString(); :}
 | VOID
-| Type CORS ;
+| Type CORCHETES ;
 
 FunctionDecl ::= FuncCont:n;
 
-FuncCont ::= Type:t IDENT:n {: if(!Manejador.put(n.toString(),"m",t)) {System.out.println("Nombre de metodo ya existe");} else {System.out.print(" Ingreso de Metodo: "+n); Manejador.push();}:} LPAR Formals:p {:Manejador.parametros(n.toString(),p);:} RPAR StmtBlock:v {:Manejador.mreturn(t.toString(),v);System.out.print(" Salida de Block"); Manejador.pop();System.out.print(" Salida del Metodo " +n); Manejador.pop();:} ;
+FuncCont ::= Type:t IDENTIFICADOR:n {: if(!Manejador.put(n.toString(),"m",t)) {System.out.println("Nombre de metodo ya existe");} else {System.out.print(" Ingreso de Metodo: "+n); Manejador.push();}:} PARABIERTO Formals:p {:Manejador.parametros(n.toString(),p);:} PARCERRADO StmtBlock:v {:Manejador.mreturn(t.toString(),v);System.out.print(" Salida de Block"); Manejador.pop();System.out.print(" Salida del Metodo " +n); Manejador.pop();:} ;
 
 Formals ::= FormalsCont:a Variable:b {: if(a==null){a="";a = a.toString().concat(b.toString());}else{a = a.toString().concat(b.toString());} RESULT = a; :}
 | /*  */
 ;
 
-FormalsCont ::= FormalsCont:a Variable:b COMMA {:if(a==null){a="";}; a = a.toString().concat(b+"-"); RESULT = a;:}
+FormalsCont ::= FormalsCont:a Variable:b COMA {:if(a==null){a="";}; a = a.toString().concat(b+"-"); RESULT = a;:}
 | /*  */
 ;
 
-ClassDecl ::= CLASS IDENT:n1 Ext:n2   
+ClassDecl ::= CLASS IDENTIFICADOR:n1 Ext:n2   
 {:
     if(n2 == null)
     {
@@ -119,13 +119,13 @@ ClassDecl ::= CLASS IDENT:n1 Ext:n2
         } 
     }
 :} 
-Imp LLLAV ClassField RLLAV 
+Imp LLAVABIERTA ClassField LLAVCERRADA 
 {:
       System.out.print("  Saliendo de la clase: "+n1);
       Manejador.pop();
  :} ;
 
-Ext ::= EXTENDS IDENT:n1 {: RESULT = n1; :}
+Ext ::= EXTENDS IDENTIFICADOR:n1 {: RESULT = n1; :}
 | /* ε */ ;
 
 Imp ::= IMPLEMENTS ImpID:e 
@@ -134,8 +134,8 @@ Imp ::= IMPLEMENTS ImpID:e
 :}
 | /* ε */ ;
 
-ImpID ::= ImpID:e1 COMMA IDENT: e2 {: RESULT = e1 + "," + e2; :}
-| IDENT:n3 {: RESULT = n3; :} ;
+ImpID ::= ImpID:e1 COMA IDENTIFICADOR: e2 {: RESULT = e1 + "," + e2; :}
+| IDENTIFICADOR:n3 {: RESULT = n3; :} ;
 
 ClassField ::= ClassField Field
 | /* ε */ ;
@@ -143,7 +143,7 @@ ClassField ::= ClassField Field
 Field ::= VariableDecl
 | FunctionDecl ;
 
-InterfaceDecl ::= INTERFACE IDENT:n1 {: if(Manejador.putClass(n1.toString(),null,null) != 0) System.out.println("  La interfaz " + n1 + " ya declarada en el ambito actual"); :} LLLAV InterfaceProt RLLAV ;
+InterfaceDecl ::= INTERFACE IDENTIFICADOR:n1 {: if(Manejador.putClass(n1.toString(),null,null) != 0) System.out.println("  La interfaz " + n1 + " ya declarada en el ambito actual"); :} LLAVABIERTA InterfaceProt LLAVCERRADA ;
 
 InterfaceProt ::= InterfaceProt Prototype
 | /* ε */ ;
@@ -151,9 +151,9 @@ InterfaceProt ::= InterfaceProt Prototype
 Prototype ::= Type ProtCont
 | VOID ProtCont;
 
-ProtCont ::= IDENT LPAR Formals RPAR SEMI ;
+ProtCont ::= IDENTIFICADOR PARABIERTO Formals PARCERRADO PUNTOYCOMA ;
 
-StmtBlock ::= LLLAV {:System.out.print(" BLOCK ENTRY"); Manejador.push(); :} StmtCont:p {:RESULT=p;:} RLLAV ;
+StmtBlock ::= LLAVABIERTA {:System.out.print(" BLOCK ENTRY"); Manejador.push(); :} StmtCont:p {:RESULT=p;:} LLAVCERRADA ;
 
 StmtCont ::= StmtEnd:p StmtCont:q{:if(p!=null){if(q==null){q="";q = q.toString().concat(p.toString());}else {q = q.toString().concat(p.toString());}}; RESULT = q; :}
 | /* ε */ ;
@@ -161,7 +161,7 @@ StmtCont ::= StmtEnd:p StmtCont:q{:if(p!=null){if(q==null){q="";q = q.toString()
 StmtEnd ::= VariableDecl
 | Stmt:p {:RESULT = p;:} ;
 
-Stmt ::= StmtExpr:m{:RESULT=m;:} SEMI
+Stmt ::= StmtExpr:m{:RESULT=m;:} PUNTOYCOMA
 | IfStmt
 | WhileStmt
 | ForStmt
@@ -173,25 +173,25 @@ Stmt ::= StmtExpr:m{:RESULT=m;:} SEMI
 StmtExpr ::= Expr:n {:RESULT=n;:}
 | /* ε */ ;
 
-IfStmt ::= IF LPAR Expr RPAR Stmt ElseIfStmt ;
+IfStmt ::= IF PARABIERTO Expr PARCERRADO Stmt ElseIfStmt ;
 
 ElseIfStmt ::= ELSE Stmt
 | /* ε */ ;
 
-WhileStmt ::= WHILE LPAR Expr RPAR Stmt ;
+WhileStmt ::= WHILE PARABIERTO Expr PARCERRADO Stmt ;
 
-ForStmt ::= FOR LPAR StmtExpr SEMI Expr SEMI StmtExpr RPAR Stmt ;
+ForStmt ::= FOR PARABIERTO StmtExpr PUNTOYCOMA Expr PUNTOYCOMA StmtExpr PARCERRADO Stmt ;
 
-ReturnStmt ::= RETURN StmtExpr:p {:RESULT = p;:} SEMI ;
+ReturnStmt ::= RETURN StmtExpr:p {:RESULT = p;:} PUNTOYCOMA ;
 
-BreakStmt ::= BREAK SEMI ;
+BreakStmt ::= BREAK PUNTOYCOMA ;
 
-PrintStmt ::= PRINT LPAR ExprPrint RPAR SEMI ;
+PrintStmt ::= PRINT PARABIERTO ExprPrint PARCERRADO PUNTOYCOMA ;
 
-ExprPrint ::= ExprPrint:a COMMA Expr:b {:a = a.toString().concat(","+b.toString()); RESULT = a;:}
+ExprPrint ::= ExprPrint:a COMA Expr:b {:a = a.toString().concat(","+b.toString()); RESULT = a;:}
 | Expr:n {:RESULT=n.toString();:} ;
 
-Expr ::= LValue:v EQUALS Expr:e 
+Expr ::= LValue:v IGUAL Expr:e 
 {: 
     Manejador.Validar(v.toString(), e.toString());
 :} 
@@ -199,43 +199,43 @@ Expr ::= LValue:v EQUALS Expr:e
 | LValue:e {: RESULT = e; :}
 | THIS
 | Call 
-| LPAR Expr:p RPAR {:RESULT = p;:}
-| Expr1:e1 PLUS Expr:e2 {: RESULT = e1 + "+" + e2; :}
-| Expr1:e1 MINUS Expr:e2 {: RESULT = e1 + "-" + e2; :}
-| Expr1:e1 TIMES Expr:e2 {: RESULT = e1 + "*" + e2; :}
+| PARABIERTO Expr:p PARCERRADO {:RESULT = p;:}
+| Expr1:e1 SUMA Expr:e2 {: RESULT = e1 + "+" + e2; :}
+| Expr1:e1 RESTA Expr:e2 {: RESULT = e1 + "-" + e2; :}
+| Expr1:e1 MULTI Expr:e2 {: RESULT = e1 + "*" + e2; :}
 | Expr1:e1 DIV Expr:e2 {: RESULT = e1 + "/" + e2; :}
 | Expr MOD Expr
-| MINUS Expr
-| Expr LESS Expr
-| Expr LESSEQ Expr
-| Expr GREATER Expr
-| Expr GREATEREQ Expr
-| Expr EQTO Expr
-| Expr NOTEQ Expr
+| RESTA Expr
+| Expr MENOR Expr
+| Expr MENORIGUAL Expr
+| Expr MAYOR Expr
+| Expr MAYORIGUAL Expr
+| Expr IGUAL Expr
+| Expr DISTINTO Expr
 | Expr AMPERSONS Expr
 | Expr OR Expr
 | EXCLAM Expr
-| NEW LPAR IDENT RPAR
-| NEWARRAY LPAR Expr COMMA Type RPAR
-| READINTEGER LPAR RPAR
-| READLINE LPAR RPAR
-| MALLOC LPAR Expr RPAR ;
+| NEW PARABIERTO IDENTIFICADOR PARCERRADO
+| NEWARRAY PARABIERTO Expr COMA Type PARCERRADO
+| READINTEGER PARABIERTO PARCERRADO
+| READLINE PARENTESIS
+| MALLOC PARABIERTO Expr PARCERRADO ;
 
 Expr1 ::= Constant:e {: RESULT = e; :}
-| IDENT:e {: RESULT = e; :} ;
+| IDENTIFICADOR:e {: RESULT = e; :} ;
 
-LValue ::= IDENT:e {: RESULT = e; :}
-| Expr PERIOD IDENT
-| Expr LCOR Expr RCOR ;
+LValue ::= IDENTIFICADOR:e {: RESULT = e; :}
+| Expr PERIOD IDENTIFICADOR
+| Expr CORABIERTO Expr CORCERRADO ;
 
-Call ::= IDENT:n {:if(!Manejador.get_name(n.toString(), "m")){ System.out.println(" advertencia ==> Método: " + n + " no ha sido declarado");}:} LPAR Actuals:n1 {:Manejador.tipos(n.toString(),n1.toString());:} RPAR 
-| Expr PERIOD IDENT CallCont
+Call ::= IDENTIFICADOR:n {:if(!Manejador.get_name(n.toString(), "m")){ System.out.println(" advertencia ==> Método: " + n + " no ha sido declarado");}:} PARABIERTO Actuals:n1 {:Manejador.tipos(n.toString(),n1.toString());:} PARCERRADO 
+| Expr PERIOD IDENTIFICADOR CallCont
 | Expr PERIOD LibCall CallCont ;
 
-CallCont ::= LPAR Actuals RPAR ;
+CallCont ::= PARABIERTO Actuals PARCERRADO ;
 
-LibCall ::= GETBYTE LPAR Expr RPAR 
-| SETBYTE LPAR Expr COMMA Expr RPAR ;
+LibCall ::= GETBYTE PARABIERTO Expr PARCERRADO 
+| SETBYTE PARABIERTO Expr COMA Expr PARCERRADO ;
 
 Actuals ::= ExprPrint:n {:System.out.println(n); RESULT=n;:}
 | /* ε */ ;

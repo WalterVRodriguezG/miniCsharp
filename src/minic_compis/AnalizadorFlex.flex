@@ -32,8 +32,7 @@ import java.io.*;
 
 /* Espacios en blanco */
 ESPACIO = [ \n\t\r]
-//RESERVADAS = void | int | double | bool | string | class | interface | null | this | extends | implements | for | while | if | else | return | break | New | NewArray
-//CARACTERES =  "+" | "-" | "*" |"/" | "%" | "<" | "<=" | ">" | ">=" | "=" | "==" | "!=" | "&&" | "||" | "!" | ";" | "," | "." | "[" | "]" | "(" | ")" | "{" | "}" | "[]" | "()" | "{}"
+
 BOOLEANAS = true | false;
 %{
         //public String analizar;
@@ -82,67 +81,60 @@ BOOLEANAS = true | false;
 "GetByte" { return symbol(sym.GETBYTE, yytext()); }
 "SetByte" { return symbol(sym.SETBYTE, yytext()); }
 "const" {return symbol(sym.CONSTANT, yytext()); }
- "#" { /* Ignore */}
+"#" { /* Ignore */}
 "include" [^*] ~ ">" { /* Ignore */}
 
 /* IDENTIFICADORES */
-//[a-zA-Z][a-zA-Z0-9_]* {analizar=yytext(); linea=yyline; columna=yycolumn; return Identificador;}
 
-[a-zA-Z][a-zA-Z0-9_]* { return symbol(sym.IDENT, yytext()); }
+[a-zA-Z][a-zA-Z0-9_]* { return symbol(sym.IDENTIFICADOR, yytext()); }
 
-/* COMENTARIO INCOMPLETO */
-//"/*" [^*]+ {analizar=yytext(); linea=yyline; columna=yycolumn; return Comentario_Incompleto;}
-//" {analizar=yytext(); linea=yyline; columna=yycolumn; return Comentario_Incompleto;}
+            /* COMENTARIOS */ 
+/* INCOMPLETO */
+"/*" [^*]+ {System.out.print("  ERROR en linea: " + (yyline +1)  + " ---> " + "Comentario Incompleto - Falta cierre de comentario multilinea " + "\n"); }
 
-"/*" [^*]+ {System.out.print(" *** ERROR LINEA " + (yyline +1) + " ***" + "   " + "Comentario Incompleto - Falta cierre de comentario multilinea " + "\n"); }
-
-
-/* OPERADORES Y CARACTERES */
-//{CARACTERES} {analizar=yytext(); linea=yyline; columna=yycolumn; return Caracter;}
-
-"+" {return symbol(sym.PLUS, yytext()); }
-"-" {return symbol(sym.MINUS, yytext()); }
-"*" {return symbol(sym.TIMES, yytext()); }
-"/" {return symbol(sym.DIV, yytext()); }
-"%" {return symbol(sym.MOD, yytext()); }
-"<" {return symbol(sym.LESS, yytext()); }
-"<=" {return symbol(sym.LESSEQ, yytext()); }
-">" {return symbol(sym.GREATER, yytext()); }
-">=" {return symbol(sym.GREATEREQ, yytext()); }
-"=" {return symbol(sym.EQUALS, yytext()); }
-"==" {return symbol(sym.EQTO, yytext()); }
-"!=" {return symbol(sym.NOTEQ, yytext()); }
-"&&" {return symbol(sym.AMPERSONS, yytext()); }
-"||" {return symbol(sym.OR, yytext()); }
-"!" {return symbol(sym.EXCLAM, yytext()); }
-";" {return symbol(sym.SEMI, yytext()); }
-"," {return symbol(sym.COMMA, yytext()); }
-"." {return symbol(sym.PERIOD, yytext()); }
-"[" {return symbol(sym.LCOR, yytext()); }
-"]" {return symbol(sym.RCOR, yytext()); }
-"(" {return symbol(sym.LPAR, yytext()); }
-")" {return symbol(sym.RPAR, yytext()); }
-"{" {return symbol(sym.LLLAV, yytext()); }
-"}" {return symbol(sym.RLLAV, yytext()); }
-"[]" {return symbol(sym.CORS, yytext()); }
-//"()" {return symbol(sym.PARS, yytext()); }
-//"{}" {return symbol(sym.LLAVS, yytext()); }
-
-/* STRINGS */
-// \" [^\r\n]+  \" {analizar=yytext(); linea=yyline; columna=yycolumn; return String;}
-
-\" [^\r\n]+  \" { return symbol(sym.stringConstant, yytext()); }
-
-/* COMENTARIOS */ 
+/* VÁLIDOS */ 
 "/*" [^*] ~ "*/"  {/*Ignore*/}  /* COMENTARIO MULTILINEA */
 "//" [^\r\n]+  {/*Ignore*/}   /* COMENTARIO DE UNA LINEA */
 
-/* CONSTATES BOOLEANAS */
-//{BOOLEANAS} {analizar=yytext(); linea=yyline; columna=yycolumn; return Constante_Booleana;}
+            /* OPERADORES Y CARACTERES */
 
+"+" {return symbol(sym.SUMA, yytext()); }
+"-" {return symbol(sym.RESTA, yytext()); }
+"*" {return symbol(sym.MULTI, yytext()); }
+"/" {return symbol(sym.DIV, yytext()); }
+"%" {return symbol(sym.MOD, yytext()); }
+"<" {return symbol(sym.MENOR, yytext()); }
+"<=" {return symbol(sym.MENORIGUAL, yytext()); }
+">" {return symbol(sym.MAYOR, yytext()); }
+">=" {return symbol(sym.MAYORIGUAL, yytext()); }
+"=" {return symbol(sym.IGUAL, yytext()); }
+"==" {return symbol(sym.IGUALCOMPARACION, yytext()); }
+"!=" {return symbol(sym.DISTINTO, yytext()); }
+"&&" {return symbol(sym.AMPERSONS, yytext()); }
+"||" {return symbol(sym.OR, yytext()); }
+"!" {return symbol(sym.EXCLAM, yytext()); }
+";" {return symbol(sym.PUNTOYCOMA, yytext()); }
+"," {return symbol(sym.COMA, yytext()); }
+"." {return symbol(sym.PUNTO, yytext()); }
+"[" {return symbol(sym.CORABIERTO, yytext()); }
+"]" {return symbol(sym.CORCERRADO, yytext()); }
+"(" {return symbol(sym.PARABIERTO, yytext()); }
+")" {return symbol(sym.PARCERRADO, yytext()); }
+"{" {return symbol(sym.LLAVABIERTA, yytext()); }
+"}" {return symbol(sym.LLAVCERRADA, yytext()); }
+"[]" {return symbol(sym.CORCHETES, yytext()); }
+//"()" {return symbol(sym.PARENTESIS, yytext()); }
+//"{}" {return symbol(sym.LLAVES, yytext()); }
+
+/* Cadenas */
+\" [^\r\n]+  \" { return symbol(sym.stringConstant, yytext()); }
+
+/* VARIABLES BOOLEANAS */
+//{BOOLEANAS} {analizar=yytext(); linea=yyline; columna=yycolumn; return Constante_Booleana;}
 {BOOLEANAS} {return symbol(sym.boolConstant, yytext()); }
 
-/* NUMEROS ENTEROS */
+            /* NUMEROS */
+/* ENTEROS */
 //[0-9]+ {analizar=yytext(); linea=yyline; columna=yycolumn; return Numero_Entero;}
 
 [0-9]+ {return symbol(sym.intConstant, new Integer(yytext())); }
